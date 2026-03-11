@@ -1,0 +1,6 @@
+# pyproject.toml
+[tool.isort]
+profile = "black"
+known_first_party = ["profiles", "recipes"]  # tus apps Django
+multi_line_output = 3
+include_trailing_comma = true

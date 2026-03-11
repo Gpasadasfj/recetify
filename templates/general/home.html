@@ -1,0 +1,227 @@
+{% extends "general/layout.html" %} 
+{% block head_title %} Recetify - Home {% endblock head_title %} {% block page_content %}
+
+<div class="container">
+
+  {% include "_includes/_hero.html" %}
+  <form>
+
+    <!-- Buscador de recetas-->
+    <div
+      class="relative w-full max-w-md md:w-auto md:mt-4 xl:max-w-dvw xl:mr-4"
+    >
+      <div class="block absolute left-5 top-3.5 text-gray-500">
+        {% include "icons/search.html" %}
+      </div>
+      <input
+        type="text"
+        name="search"
+        value="{{ request.GET.search }}"
+        placeholder="Buscador de recetas"
+        class="pl-9 rounded-2xl justify-center flex w-[94dvw] m-2 border-transparent focus:outline-none focus:ring-0 focus:border-green-300 md:w-[67dvw] lg:w-[68dvw] xl:w-full"
+      />
+      <button
+        class="absolute cursor-pointer right-3 top-1 md:left-[63dvw] lg:left-[65dvw] xl:left-276 2xl:left-328"
+        type="submit"
+      >
+        {% include "icons/arrow.html" %}
+      </button>
+    </div>
+
+    <!-- Etiquetas -->
+    <div class="overflow-x-auto scrollbar-hide">
+      <div class="flex gap-2 mt-2 pl-2 pr-2 md:gap-4 xl:justify-around md:pb-1">
+        <a
+          href="?max_time=15{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="btn p-2 pr-3 flex items-center rounded-2xl text-sm font-medium bg-white text-black shadow mb-1 md:text-lg"
+        >
+          {% include "icons/thunder.html" %} Rápida
+        </a>
+        <a
+          href="?difficulty=Fácil{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="btn p-2 pr-3 flex gap-1.5 items-center rounded-2xl text-sm font-medium bg-white text-black shadow mb-1 md:text-lg"
+        >
+          {% include "icons/smile.html" %} Fácil</a
+        >
+        <a
+          href="?food_category=Aperitivo{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="tag p-2 pr-3 flex gap-1.5 items-center rounded-2xl text-sm font-medium bg-white text-black shadow mb-1 md:text-lg"
+        >
+          {% include "icons/snack.html" %} Snack</a
+        >
+        <a
+          href="?food_category=Preentreno{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="tag p-2 pr-3 flex gap-1.5 items-center rounded-2xl text-sm font-medium bg-white text-black shadow mb-1 md:text-lg"
+        >
+          {% include "icons/muscle.html" %} Preentreno</a
+        >
+        <a
+          href="?food_category=Cena{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}"
+          class="tag p-2 pr-3 flex gap-1 items-center rounded-2xl text-sm font-medium bg-white text-black shadow mb-1 md:text-lg"
+        >
+          {% include "icons/night.html" %} Cena</a
+        >
+      </div>
+    </div>
+  </form>
+
+  <!-- Feed -->
+  <section class="p-2">
+    <h2 class="text-2xl font-bold font-title">
+      {% if request.GET.search and request.GET.max_time %} Recetas rápidas con
+      "{{ request.GET.search }}" {% elif request.GET.search and
+      request.GET.food_category %} {{ request.GET.food_category }} con "{{
+      request.GET.search }}" {% elif request.GET.search and
+      request.GET.difficulty == "Fácil" %} Recetas fáciles con "{{
+      request.GET.search }}" {% elif request.GET.search %} Resultados para "{{
+      request.GET.search }}" {% elif request.GET.max_time == "15" %} Recetas
+      rápidas {% elif request.GET.difficulty == "Fácil" %} Recetas fáciles {%
+      elif request.GET.food_category %} Recetas de {{
+      request.GET.food_category|lower }} {% endif %}
+    </h2>
+
+    <div
+      class="lg:grid-cols-2 lg:gap-4 mb-8 xl:grid-cols-3 {% if not page_obj %} lg:flex justify-center {% else %} lg:grid {% endif %}"
+    >
+      <!-- Recetas -->
+      {% if page_obj %} 
+      {% for recipe in page_obj %}
+
+      <article
+        class="recipe w-full h-full rounded-2xl shadow-md overflow-hidden flex flex-col bg-white mt-5"
+      >
+        <a
+          href="{% url 'recipes:recipe_detail' recipe.pk %}"
+          class="relative flex flex-col h-full"
+        >
+          <!-- Imagen -->
+          {% if recipe.image %}
+          <img
+            class="w-full h-64 object-cover rounded-t-2xl"
+            src="{{ recipe.image.url }}"
+            alt=""
+          />
+          {% endif %}
+
+          <!-- Dificultad -->
+          <p
+            class="absolute text-black font-bold top-3 left-3 px-2 rounded-full 
+            {% if recipe.difficulty.name == 'Fácil' %} bg-(--primary-color) {% endif %} 
+            {% if recipe.difficulty.name == 'Medio' %} bg-amber-300 {% endif %} 
+            {% if recipe.difficulty.name == 'Difícil' %} bg-red-500 {% endif %}"
+          >
+            {{ recipe.difficulty.name }}
+          </p>
+
+          <div class="p-4 flex flex-col grow">
+            <!-- Contenido superior: usuario y título -->
+            <div>
+              <div class="flex items-center mt-2">
+                <img
+                  class="w-8 h-8 rounded-full object-cover"
+                  src="{{ recipe.user.profile.profile_image_url }}"
+                  alt=""
+                />
+                <p class="ml-2 font-primary font-medium text-gray-500">
+                  {{ recipe.user.profile.full_name_title }}
+                </p>
+              </div>
+              <h5 class="font-bold text-xl font-primary mt-2 md:text-2xl">
+                {{ recipe.full_name_title }}
+              </h5>
+            </div>
+
+            <!-- Contenido inferior: rating y tiempo -->
+            <div class="flex justify-between mt-auto">
+              <p class="font-bold flex items-center gap-1.5 md:text-lg">
+                {% include "icons/star.html" %} 
+                {% if recipe.average_rating != 0 %} 
+                    {{ recipe.average_rating|floatformat:1 }} 
+                {% else %}
+                    <span class="text-gray-500">Sin valoraciones</span>
+                {% endif %}
+              </p>
+              <p class="font-bold text-gray-500 flex items-center md:text-lg">
+                {% include "icons/timer.html" %} {{ recipe.time_data.display }}
+              </p>
+            </div>
+          </div>
+        </a>
+      </article>
+      {% endfor %}
+    </div>
+
+    <!-- Si no hay recetas y sigues a alguien -->
+    {% elif request.user.is_authenticated and request.GET.max_time or request.GET.food_category or request.GET.search or request.GET.difficulty %}
+    <p>Sin recetas...</p>
+
+    {% else %}
+    <!-- Mensaje por defecto si no hay seguidos -->
+    <div class="text-center bg-white rounded-2xl p-4 pb-6 shadow-2xl">
+      <h4 class="text-2xl font-bold font-primary mt-4 md:text-3xl">
+        🍽️ Aún no sigues a nadie...
+      </h4>
+      <p class="md:text-xl mt-2">
+        Parece que tu feed está esperando nuevas recetas deliciosas 👀✨
+      </p>
+      <p class="md:text-xl mt-2">
+        Empieza a descubrir platos increíbles y conecta con cocineros que
+        comparten tu pasión.
+      </p>
+
+      <p class="text-xl font-semibold mt-4 md:text-2xl">
+        ¿Qué quieres hacer ahora?
+      </p>
+      <div class="flex flex-col items-center">
+        <a
+          href="{% url 'recipes:recipe_list' %}"
+          class="bg-(--primary-color) mt-4 px-4 py-2 rounded-xl flex items-center justify-center gap-2 text-white font-bold w-60 md:w-80 md:text-2xl"
+        >
+          <span class="text-white md:scale-125 md:mr-2"
+            >{% include "icons/search.html" %}</span
+          >
+          Explorar recetas</a
+        >
+        <a
+          href="{% url 'profiles:profiles_list' %}"
+          class="bg-white mt-4 px-4 py-2 rounded-xl flex items-center justify-center gap-2 text-(--primary-color) border-2 font-bold w-60 md:w-80 md:text-2xl"
+        >
+          <span class="text-(--primary-color) md:scale-125 md:mr-2"
+            >{% include "icons/social.html" %}</span
+          >
+          Explorar perfiles</a
+        >
+      </div>
+    </div>
+    {% endif %}
+
+    <!-- Ver mas recetas con o sin filtros -->
+    {% if page_obj.has_next %}
+    <div class="flex justify-center shadow-md rounded-2xl mt-6">
+      <a
+        href="?page={{ page_obj.next_page_number }} {% if request.GET.search %}&search={{ request.GET.search }}{% endif %} 
+        {% if request.GET.max_time %}&max_time={{ request.GET.max_time }}{% endif %} 
+        {% if request.GET.difficulty %}&difficulty={{ request.GET.difficulty }}{% endif %} 
+         {% if request.GET.food_category %}&food_category={{ request.GET.food_category }}{% endif %}"
+        class="px-6 py-3 text-center w-full rounded-2xl font-semibold bg-white text-black hover:opacity-90 transition md:text-lg"
+      >
+        Ver más recetas
+      </a>
+    </div>
+    {% endif %}
+
+    <!-- Volver atrás -->
+    {% if page_obj.has_previous %}
+    <div class="flex justify-center shadow-md rounded-2xl mt-6">
+      <a
+        href="?page={{ page_obj.previous_page_number }} {% if request.GET.search %}&search={{ request.GET.search }}{% endif %} {% if request.GET.max_time %}&max_time={{ request.GET.max_time }}{% endif %} 
+        {% if request.GET.difficulty %}&difficulty={{ request.GET.difficulty }}{% endif %} {% if request.GET.food_category %}&food_category={{ request.GET.food_category }}{% endif %}"
+        class="px-6 py-3 w-full shadow-md text-center rounded-2xl font-semibold bg-white text-black border border-gray-200 hover:bg-gray-100 transition md:text-lg"
+      >
+        Volver atrás
+      </a>
+    </div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% extends "general/layout.html" %} 
+{% load static %} 
+{% block head_title %}Recetify - Lista de perfiles{% endblock head_title %} 
+{% block page_content %}
+<div class="container p-2">
+  <form method="get">
+    <div class="relative">
+      <input
+        id="chefs-search"
+        type="text"
+        name="search"
+        placeholder="Busca chefs o amigos..."
+        class="pl-8 w-full rounded-3xl border border-gray-300 my-4 focus:outline-none active:border-gray-300 focus:ring-green-400"
+      />
+      <span class="absolute left-2.5 bottom-7 scale-125"
+        >{% include "icons/search.html" %}</span
+      >
+      <button class="absolute right-1 bottom-5.5" type="submit">
+        {% include "icons/arrow.html" %}
+      </button>
+    </div>
+  </form>
+
+  <ul class="flex flex-col gap-3">
+    {% for profile in profiles %}
+    <li
+      class="flex items-center justify-between w-full bg-white p-2 rounded-2xl border border-gray-300"
+    >
+      <!-- Link con imagen y nombre -->
+      <a
+        href="{% url 'profiles:profile_detail' profile.pk %}"
+        class="flex w-full justify-between items-center gap-2"
+      >
+        <div class="flex gap-2">
+          <img
+            src="{{ profile.profile_image_url }}"
+            class="w-12 h-12 rounded-full object-cover"
+          />
+          <div>
+            <p class="font-bold">{{ profile.full_name_title }}</p>
+            <p class="text-gray-500">@{{ profile.user.username }}</p>
+          </div>
+        </div>
+
+        <!-- Botón a la derecha -->
+        {% if profile.user != request.user %}
+        <button
+          data-url="{% url 'profiles:toggle_follow' profile.pk %}"
+          class="cursor-pointer follow-btn px-4 py-2 bg-green-400 text-white font-bold rounded-2xl whitespace-nowrap"
+        >
+          {% if profile.id in following_ids %} Siguiendo {% else %} Seguir {% endif %}
+        </button>
+        {% endif %}
+      </a>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script src="{% static 'js/toggle_follow_ajax.js' %}" defer></script>
+{% endblock %}

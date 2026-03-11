@@ -1,0 +1,45 @@
+<div
+  class="recipe relative overflow-hidden my-0.5 mx-auto h-[45dvw] w-[45dvw] rounded-3xl md:w-[33dvw] md:h-[33dvw] xl:w-92 xl:h-92 2xl:w-[98%] 2xl:h-100"
+>
+  <a
+    class="w-full h-full block"
+    href="{% url 'recipes:recipe_detail' recipe.pk %}"
+  >
+    <img
+      class="object-cover w-full h-full absolute"
+      src="{{ recipe.image.url }}"
+      alt=""
+    />
+
+    <!-- Overlay oscuro -->
+    <div class="absolute inset-0 bg-black/40"></div>
+    <p
+      class="absolute text-black font-bold top-3 left-3 px-2 text-xs rounded-full {% if recipe.difficulty.name == 'Fácil' %} bg-(--primary-color) {% endif %} {% if recipe.difficulty.name == 'Medio' %} bg-amber-300 {% endif %} {% if recipe.difficulty.name == 'Difícil' %} bg-red-500 {% endif %}"
+    >
+      {{ recipe.difficulty.name }}
+    </p>
+    <h4 class="absolute bottom-10 left-3 text-white z-10 font-text font-bold">
+      {{ recipe.title|capfirst }}
+    </h4>
+
+    <!-- Tiempo-->
+    <div
+      class="absolute bottom-2 ml-1 font-light text-xs text-white z-10 flex items-center"
+    >
+      <span class="scale-75 w-7">{% include "icons/timer.html" %}</span>
+      <span class="font-bold">{{ recipe.time_data.display }}</span>
+    </div>
+
+    <!-- Valoraciones -->
+    <div
+      class="absolute bottom-0.5 left-8 font-light text-xs text-white z-10 flex items-center md:left-25 lg:left-45"
+    >
+      <span class="absolute text-yellow-300 bottom-3.5 left-21 scale-150"
+        >★</span
+      >
+      <span class="absolute left-25 bottom-3.5 font-bold"
+        >{{ recipe.average_rating|floatformat:1 }}</span
+      >
+    </div>
+  </a>
+</div>

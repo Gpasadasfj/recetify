@@ -1,0 +1,182 @@
+{% extends "general/layout.html" %}
+{% load static %}
+
+{% block head_title %}Recetify - Lista de recetas{% endblock head_title %}
+
+{% block page_content %}
+<div class="container p-4">
+  <form method="get">
+
+    <!-- Nombre -->
+    <div class="relative mt-4">
+      <input type="text" placeholder="Buscador por nombre" name="search" class="rounded-2xl pl-9 w-full border-gray-400 focus:ring focus:ring-green-400 focus:border-green-400">
+      <span class="absolute bottom-3 left-3 scale-125">{% include "icons/search.html" %}</span>
+    </div>
+
+    <h2 class="font-bold text-2xl font-primary mt-4">Filtros de búsqueda</h2>
+
+    <!-- Tiempo -->
+    <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Tiempo</h3>
+    <div class="flex flex-col">
+      <label class="flex justify-between font-semibold" for="timeRange">Tiempo máximo <span id="timeValue" class="text-green-400">Todos</span></label>
+        <input 
+          type="range" 
+          id="timeRange" 
+          name="time"
+          min="0" 
+          max="5" 
+          step="1" 
+          value="0"
+          class="accent-green-400"
+          >
+
+      <div class="flex justify-between text-xs mt-2 px-1 font-bold">
+        <span>-</span>
+        <span>5</span>
+        <span>15</span>
+        <span>30</span>
+        <span>1h</span>
+        <span>2h</span>
+      </div>
+    
+      <!-- Dificultad-->
+      <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Dificultad</h3>
+      <div class="m-2 flex justify-between">
+        <!-- Todos -->
+      <input type="radio" name="difficulty" value="" id="d0" class="hidden peer/d0" checked>
+      <label for="d0"
+        class="px-4 py-2 bg-white border-2 border-gray-300 cursor-pointer select-none rounded-full font-bold
+               peer-checked/d0:bg-(--btn-bg)
+               peer-checked/d0:text-(--primary-color)
+               peer-checked/d0:border-(--primary-color)
+               hover:bg-gray-100 transition">
+        Todos
+      </label>
+  
+      <!-- Fácil -->
+      <input type="radio" name="difficulty" value="easy" id="d1" class="hidden peer/d1">
+      <label for="d1"
+        class="px-4 py-2 bg-white border-2 border-gray-300 cursor-pointer select-none rounded-full font-bold
+               peer-checked/d1:bg-(--btn-bg)
+               peer-checked/d1:text-(--primary-color)
+               peer-checked/d1:border-(--primary-color)
+               hover:bg-gray-100 transition">
+        Fácil
+      </label>
+  
+      <!-- Medio -->
+      <input type="radio" name="difficulty" value="medium" id="d2" class="hidden peer/d2">
+      <label for="d2"
+        class="px-4 py-2 bg-white border-2 border-gray-300 cursor-pointer select-none rounded-full font-bold
+               peer-checked/d2:bg-(--btn-bg)
+               peer-checked/d2:text-(--primary-color)
+               peer-checked/d2:border-(--primary-color)
+               hover:bg-gray-100 transition">
+        Medio
+      </label>
+  
+      <!-- Difícil -->
+      <input type="radio" name="difficulty" value="hard" id="d3" class="hidden peer/d3">
+      <label for="d3"
+        class="px-4 py-2 bg-white border-2 border-gray-300 cursor-pointer select-none rounded-full font-bold
+               peer-checked/d3:bg-(--btn-bg)
+               peer-checked/d3:text-(--primary-color)
+               peer-checked/d3:border-(--primary-color)
+               hover:bg-gray-100 transition">
+        Difícil
+      </label>
+        
+      </div>
+
+  </div>
+  
+  <!-- Tipo de comida -->
+  <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Tipo de comida</h3>
+      <div class="flex flex-wrap mt-4 gap-2 xl:justify-around">
+
+    <!-- Desayuno -->
+    <input type="checkbox" name="food_type" value="breakfast" id="f1" class="hidden peer/f1">
+    <label for="f1"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f1:bg-(--primary-color)
+             peer-checked/f1:text-white
+             hover:bg-gray-100">
+      Desayuno
+    </label>
+
+        <!-- Cena -->
+    <input type="checkbox" name="food_type" value="dinner" id="f3" class="hidden peer/f3">
+    <label for="f3"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f3:bg-(--primary-color)
+             peer-checked/f3:text-white
+             hover:bg-gray-100">
+      Cena
+    </label>
+
+    <!-- Postentreno -->
+    <input type="checkbox" name="food_type" value="post-workout" id="f6" class="hidden peer/f6">
+    <label for="f6"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f6:bg-(--primary-color)
+             peer-checked/f6:text-white
+             hover:bg-gray-100">
+      Postentreno
+    </label>
+
+    <!-- Almuerzo -->
+    <input type="checkbox" name="food_type" value="lunch" id="f2" class="hidden peer/f2">
+    <label for="f2"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f2:bg-(--primary-color)
+             peer-checked/f2:text-white
+             hover:bg-gray-100">
+      Almuerzo
+    </label>
+
+    <!-- Aperitivo -->
+    <input type="checkbox" name="food_type" value="snack" id="f4" class="hidden peer/f4">
+    <label for="f4"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f4:bg-(--primary-color)
+             peer-checked/f4:text-white
+             hover:bg-gray-100">
+      Aperitivo
+    </label>
+
+    <!-- Preentreno -->
+    <input type="checkbox" name="food_type" value="pre-workout" id="f5" class="hidden peer/f5">
+    <label for="f5"
+      class="px-4 py-2 rounded-full border border-gray-300 font-bold bg-white cursor-pointer select-none
+             transition
+             peer-checked/f5:bg-(--primary-color)
+             peer-checked/f5:text-white
+             hover:bg-gray-100">
+      Preentreno
+    </label>
+  </div>
+  
+      <button type="submit" class="cursor-pointer w-full text-white mt-6 font-bold py-2 bg-(--primary-color) rounded-full ">Aplicar filtros</button>
+    </form>
+
+    </div>
+  
+    <ul>
+      {% if recipes %}
+  <div id="recipes" class="grid grid-cols-2 mt-4 mx-2 gap-1 xl:grid-cols-3 md:gap-2">
+    {% for recipe in recipes %}
+      {% include "_includes/_recipe_card.html" with recipe=recipe only %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  </ul>
+</div>
+
+<script src="{% static 'js/time_filter.js' %}" defer></script>
+{% endblock %}
+

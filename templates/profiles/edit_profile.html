@@ -1,0 +1,143 @@
+{% extends "general/layout.html" %} {% load static %} {% block head_title %}
+Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
+
+<div class="container">
+  <div
+    class="p-2 m-2 bg-white rounded-2xl border-2 border-gray-300 shadow-xl mt-8"
+  >
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div>
+        <h2 class="text-2xl text-center mt-4 font-bold font-primary">
+          Editar perfil
+        </h2>
+
+        <!-- Imagen de perfil -->
+        <div class="flex justify-center">
+          <img
+            id="image-preview"
+            src="{{ profile.profile_image_url }}"
+            alt="Foto de perfil"
+            class="my-3 rounded-full max-h-64 object-cover outline-4 outline-(--primary-color)/50 border-4 border-white shadow-xl"
+          />
+        </div>
+
+        <!-- input real oculto -->
+        <input
+          type="file"
+          name="profile_picture"
+          id="id_profile_picture"
+          class="hidden"
+          accept="image/*"
+          onchange="previewImage(event)"
+        />
+
+        <!-- botón visible -->
+        <div class="flex justify-center">
+          <label
+            for="id_profile_picture"
+            class="inline-flex gap-2 rounded-lg bg-(--primary-color) px-4 py-2 mt-4 text-sm font-bold text-white cursor-pointer"
+          >
+            Cambiar imagen
+          </label>
+        </div>
+
+        <!-- Errores -->
+        {% if form.profile_picture.errors %}
+        <div class="text-red-500 ml-2">
+          * {{ form.profile_picture.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Nombre -->
+      <div class="mt-4">
+        <p class="font-semibold">Nombre</p>
+        <div class="relative">
+          <span> {{ user_form.first_name }} </span>
+          <p class="absolute left-3 top-4 text-gray-400">
+            {% include "icons/person.html" %}
+          </p>
+        </div>
+        {% if user_form.first_name.error %}
+        <div class="text-red-500 ml-2">* {{ user_form.first_name.error }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Apellido -->
+      <div class="mt-4">
+        <p class="font-semibold">Apellidos</p>
+        <div class="relative">
+          <span> {{ user_form.last_name }} </span>
+          <p class="absolute left-3 top-4 text-gray-400">
+            {% include "icons/last_name.html" %}
+          </p>
+        </div>
+        {% if user_form.last_name.errors %}
+        <div class="text-red-500 ml-2">
+          * {{ user_form.last_name.errors.0 }}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Nombre de usuario -->
+      <div class="mt-4">
+        <p class="font-semibold">Nombre de usuario</p>
+        <div class="relative">
+          <span> {{ user_form.username }} </span>
+          <p class="absolute left-3 top-4 text-gray-400">
+            {% include "icons/username.html" %}
+          </p>
+        </div>
+        {% if user_form.username.errors %}
+        <div class="text-red-500 ml-2">* {{ user_form.username.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Email -->
+      <div class="mt-4">
+        <p class="font-semibold">Correo electrónico</p>
+        <div class="relative">
+          <span> {{ user_form.email }} </span>
+          <p class="absolute left-3 top-4 text-gray-400">
+            {% include "icons/email.html" %}
+          </p>
+        </div>
+        {% if user_form.email.errors %}
+        <div class="text-red-500 ml-2">* {{ user_form.email.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Biografía -->
+      <div class="mt-4">
+        <p class="font-semibold">Biografía</p>
+        {{ form.bio }} {% if form.bio.errors %}
+        <div class="text-red-500 ml-2">* {{ form.bio.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <!-- Fecha de nacimiento -->
+      <div class="mt-4">
+        <p class="font-semibold">Fecha de nacimiento</p>
+        {{ form.birth_date }} {% if form.birth_date.errors %}
+        <div class="text-red-500 ml-2">* {{ form.birth_date.errors.0 }}</div>
+        {% endif %}
+      </div>
+
+      <div class="border-t border-gray-300 my-8 mx-4 flex justify-center">
+        <button
+          type="submit"
+          class="cursor-pointer bg-(--primary-color) w-full px-2 py-4 text-white font-bold rounded-full mt-6"
+        >
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+
+    {% include "_includes/_delete_profile_modal.html" %}
+  </div>
+</div>
+
+<script src="{% static 'js/img_preview.js' %}" defer></script>
+
+{% endblock page_content %}

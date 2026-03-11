@@ -1,0 +1,124 @@
+{% extends "general/layout.html" %} 
+{% block head_title %}Recetify- Registro{% endblock head_title %} 
+{% block page_content %}
+
+<div class="bg-gradient pb-20 min-h-screen">
+  <div class="container p-4">
+    <div class="text-center">
+      <h1 class="text-3xl font-bold font-primary">
+        Únete a nuestra comunidad de chefs
+      </h1>
+      <p class="mt-4 text-(--primary-color)">
+        Descubre, comparte y organiza tus recetas favoritas.
+      </p>
+    </div>
+
+    <div
+      class="bg-white rounded-2xl shadow-2xl flex flex-col items-centerbg-white m-2 p-4"
+    >
+      <form method="post">
+        {% csrf_token %}
+        
+        <!-- Nombre -->
+        <div class="mt-4">
+          <p class="font-semibold">Nombre</p>
+          <div class="relative">
+            <span> {{ form.first_name }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/person.html" %}
+            </p>
+          </div>
+          {% if form.first_name.error %}
+          <div>{{ form.first_name.error }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Apellido -->
+        <div class="mt-4">
+          <p class="font-semibold">Apellidos</p>
+          <div class="relative">
+            <span> {{ form.last_name }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/last_name.html" %}
+            </p>
+          </div>
+          {% if form.errors.last_name %}
+          <div class="text-red-500 ml-2">{{ form.errors.last_name }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Nombre de usuario -->
+        <div class="mt-4">
+          <p class="font-semibold">Nombre de usuario</p>
+          <div class="relative">
+            <span> {{ form.username }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/username.html" %}
+            </p>
+          </div>
+          {% if form.errors.username %}
+          <div class="text-red-500 ml-2">{{ form.errors.username }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="mt-4">
+          <p class="font-semibold">Correo electrónico</p>
+          <div class="relative">
+            <span> {{ form.email }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/email.html" %}
+            </p>
+          </div>
+          {% if form.errors.email %}
+          <div class="text-red-500 ml-2">{{ form.errors.email }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Contraseña-->
+        <div class="mt-4">
+          <p class="font-semibold">Contraseña</p>
+          <div class="relative">
+            <span> {{ form.password }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/password.html" %}
+            </p>
+          </div>
+          {% if form.errors.password %}
+          <div class="text-red-500 ml-2">{{ form.errors.password }}</div>
+          {% endif %}
+        </div>
+
+        <!-- Confirmar contraseña-->
+        <div class="mt-4">
+          <p class="font-semibold">Confirmar contraseña</p>
+          <div class="relative">
+            <span> {{ form.password_confirm }} </span>
+            <p class="absolute left-3 top-4 text-gray-400">
+              {% include "icons/password.html" %}
+            </p>
+          </div>
+          {% if form.errors.password_confirm %}
+          <div class="text-red-500 ml-2">{{ form.errors.password_confirm }}</div>
+          {% endif %}
+        </div>
+
+        <button
+          class="w-full mt-10 py-2 bg-(--primary-color) text-white font-semibold rounded"
+        >
+          Crear cuenta
+        </button>
+
+        <div class="mt-8 border-t text-center border-gray-300">
+          <p class="mt-4 text-gray-500">
+            Ya tienes una cuenta?
+            <a href="login" class="ml-2 font-bold text-(--primary-color)"
+              >Regístrate</a
+            >
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

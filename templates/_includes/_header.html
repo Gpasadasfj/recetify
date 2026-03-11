@@ -1,0 +1,38 @@
+{% load static %}
+<header
+  class="bg-white shadow-lg text-white px-6 py-4 flex items-center justify-between"
+>
+  <!-- Logo -->
+  <a href="{% url 'home' %}" class="flex items-center">
+    <img
+      class="w-24 font-extrabold md:w-32"
+      src="{% static 'img/recetify-logo.svg' %}"
+      alt=""
+    />
+  </a>
+
+  {% if not request.user.is_authenticated %}
+  <div class="text-xs font-bold gap-2 flex items-center text-black">
+    <a
+      href="{% url 'login' %}"
+      class="cursor-pointer hover:underline md:text-base"
+      >Inicia sesión</a
+    >
+    <a
+      href="{% url 'register' %}"
+      class="cursor-pointer bg-(--primary-color) py-2 px-4 rounded-full md:text-base"
+      >Regístrate</a
+    >
+    {% else %}
+    <form action="{% url 'logout' %}" method="post">
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="cursor-pointer hover:underline text-xs font-bold text-black md:text-base px-4 py-2"
+      >
+        Cerrar sesión
+      </button>
+    </form>
+    {% endif %}
+  </div>
+</header>

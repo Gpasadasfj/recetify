@@ -1,0 +1,456 @@
+{% extends "general/layout.html" %} 
+{% load static %} 
+{% block head_title %}
+  Recetify - {% if object %} Editar receta {% else %} Crear nueva receta {% endif %} 
+{% endblock head_title %} 
+{% block page_content %}
+
+<div class="container">
+<header
+  class="p-3 flex sticky top-0 z-10 justify-between items-center bg-white md:text-lg"
+>
+  <a class="text-gray-500 font-medium" href="{% url 'home' %}"> Cancelar </a>
+  <h1 class="text-xl font-semibold font-title mr-3 md:text-2xl">
+    {% if object %}Editar receta {% else %} Nueva receta {% endif %}
+  </h1>
+  <button
+    class="cursor-pointer font-bold text-(--primary-color)"
+    type="submit"
+    form="create-recipe"
+  >
+    Post
+  </button>
+</header>
+
+<form
+  method="post"
+  id="create-recipe"
+  class="space-y-5 flex flex-col"
+  enctype="multipart/form-data"
+>
+  {% csrf_token %}
+
+  <!-- Imagen de la receta -->
+  <div
+    id="img-container"
+    class=" {% if not recipe.image %} h-[50dvh] {% endif %} relative m-0 flex flex-col justify-center"
+  >
+    <img
+      id="image-preview"
+      src="{{ recipe.image.url }}"
+      alt="{{ recipe.title }}"
+      class="object-contain {% if not recipe.image %} hidden {% endif %} w-full max-h-[40dvh]"
+    />
+
+    <!-- input real oculto -->
+    <input
+      type="file"
+      name="image"
+      id="id_image"
+      class="hidden"
+      accept="image/*"
+      onchange="previewImage(event)"
+    />
+
+    <!-- botón visible -->
+    <label
+      for="id_image"
+      id="add-img"
+      class="cursor-pointer flex h-[40dvh] flex-col items-center justify-center {% if recipe.image %} hidden cursor-default {% endif %} md:text-lg"
+    >
+      {% include "icons/camera.html" %}
+      <span class="font-primary font-bold mt-2 text-black"
+        >Añade una foto de tu receta</span
+      >
+      <span class="text-gray-500 font-medium mt-2"
+        >Haz que tu plato luzca delicioso!</span
+      >
+    </label>
+
+    <!-- Errores -->
+    {% if form.image.errors %}
+    <div class="text-red-500 flex justify-center gap-1">
+        *{{ form.image.errors }}
+    </div>
+    {% endif %}
+
+    <!-- Cambiar o eliminar foto -->
+    <div
+      id="image-actions"
+      class="absolute bottom-2 left-1/2 -translate-x-1/2 gap-2 flex {% if not recipe.image %} hidden {% endif %}"
+    >
+      <button
+        class="cursor-pointer bg-black/40 w-[80dvw] backdrop-blur-md border border-white/20 text-white rounded-[20px] px-4 py-2 md:w-[60dvw] md:text-lg 2xl:w-280"
+        type="button"
+        onClick="openFileInput()"
+      >
+        Cambiar foto
+      </button>
+      <button
+        class="cursor-pointer bg-black/40 backdrop-blur-md border text-red-400 border-white/20 rounded-full p-2"
+        type="button"
+        onClick="removeImage()"
+      >
+        {% include "icons/delete.html" %}
+      </button>
+    </div>
+  </div>
+
+  <div class="bg-white">
+
+    <!-- Título y descripción -->
+    <div>
+      {{ form.title }} 
+      {{ form.description }}</div>
+      {% if form.title.errors %}
+        <div class="text-red-500 flex justify-center gap-1 md:text-lg">
+            *{{ form.title.errors }}
+        </div>
+      {% endif %}
+
+      <div class="xl:flex xl:justify-around">
+
+    <!-- Tiempo de preparación -->
+    <div
+      class="flex flex-col border border-gray-200 rounded-3xl m-3 p-3 shadow-md gap-2 px-4 xl:w-[40dvw]"
+    >
+      <h4
+        class="text-(--secondary-color) flex items-center font-title font-semibold md:text-xl"
+      >
+        <span> {% include "icons/timer.html" %} </span>
+        Tiempo de preparación
+      </h4>
+
+      <div class="flex justify-between gap-3">
+
+        <!-- Dropdown de Horas -->
+        <div class="relative w-32">
+          <label class="block text-sm font-medium ml-1 text-gray-500 mb-1 md:text-base">
+            Horas
+          </label>
+
+          <div
+            id="hours-dropdown"
+            class="cursor-pointer rounded-lg px-3 py-2 bg-(--bg-color) flex justify-between items-center"
+          >
+            <span id="hours-selected" class="font-bold md:text-lg"
+              >{% if object.time %} {{ object.time_data.hours }} h {% else %}0
+              h{% endif %}</span
+            >
+            {% include "icons/dropdown.html" %}
+          </div>
+
+          <ul
+            id="hours-options"
+            class="absolute left-0 right-0 mt-1 max-h-40 overflow-auto border border-gray-300 rounded-lg bg-white shadow-lg hidden z-10"
+          >
+            {% for i in hours %}
+            <li
+              class="px-3 py-2 hover:bg-(--secondary-color-mod) cursor-pointer md:text-lg"
+              data-value="{{ i }}"
+            >
+              {{ i }} h
+            </li>
+            {% endfor %}
+          </ul>
+
+          <input type="hidden" name="hours" id="hours-input" 
+           value="{% if object.time %}{{ object.time_data.hours }}{% else %}0{% endif %}" />
+        </div>
+
+        <!-- Dropdown de Minutos -->
+        <div class="relative w-32">
+          <label class="block text-sm font-medium ml-1 text-gray-500 mb-1 md:text-base"
+            >Minutos
+          </label>
+
+          <div
+            id="minutes-dropdown"
+            class="cursor-pointer rounded-lg px-3 py-2 bg-(--bg-color) flex justify-between items-center"
+          >
+            <span id="minutes-selected" class="font-bold md:text-lg">
+              {% if object.time %} {{ object.time_data.minutes }} min 
+              {% else %} 0 min 
+              {% endif %}</span>
+              {% include "icons/dropdown.html" %}
+          </div>
+
+          <ul
+            id="minutes-options"
+            class="absolute left-0 right-0 mt-1 max-h-40 overflow-auto border border-gray-300 rounded-lg bg-white shadow-lg hidden z-10"
+          >
+            {% for i in minutes %}
+            <li
+              class="px-3 py-2 hover:bg-(--secondary-color-mod) cursor-pointer md:text-lg"
+              data-value="{{ i }}"
+            >
+              {{ i }} min
+            </li>
+            {% endfor %}
+          </ul>
+
+          <input type="hidden" name="minutes" id="minutes-input" 
+           value="{% if object.time %}{{ object.time_data.minutes }}{% else %}0{% endif %}" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Dificultad -->
+    <div
+      class="flex flex-col border border-gray-200 rounded-3xl m-3 p-3 shadow-md gap-2 px-4 xl:w-[40dvw] xl:justify-between"
+    >
+      <h4
+        class="text-(--secondary-color) flex items-center font-title font-semibold gap-2 ml-2 md:text-xl"
+      >
+        <span> {% include "icons/difficulty.html" %} </span>
+        Dificultad
+      </h4>
+      <div
+        id="difficulty-select"
+        class="relative cursor-pointer rounded-lg px-3 py-2 bg-(--bg-color) flex justify-between items-center"
+      >
+        <span id="difficulty-selected" class="font-bold md:text-lg"
+          >{% if object.difficulty %} {{ object.difficulty }}
+          {% else %} {{ difficulty.0.name }}
+          {% endif %}</span>
+        {% include "icons/dropdown.html" %}
+
+        <ul
+          id="difficulty-options"
+          class="absolute right-0 left-0 top-10 mt-1 max-h-40 overflow-auto border border-gray-300 rounded-lg bg-white shadow-lg hidden z-10"
+        >
+          {% for i in difficulty %}
+          <li
+            data-value="{{ i.pk }}"
+            class="px-3 py-2 hover:bg-(--secondary-color-mod) cursor-pointer md:text-lg"
+          >
+            {{ i.name }}
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <input
+        type="hidden"
+        name="difficulty"
+        id="difficulty-input"
+        value="{% if object.difficulty %}{{ object.difficulty.pk }}{% else %}{{ difficulty.0.pk }}{% endif %}"
+
+      />
+    </div>
+  </div>
+
+    <!-- Etiquetas -->
+    <h4 class="block font-bold m-4 mt-8 font-title text-black md:text-2xl"
+      >Etiquetas</h4
+    >
+    <div class="flex overflow-scroll scrollbar-hide gap-2 mx-3 mb-3 xl:justify-between">
+      {% for checkbox in form.food_category %}
+      <div>
+        {{ checkbox.tag }}
+
+        <label
+          for="{{ checkbox.id_for_label }}"
+          class="cursor-pointer px-4 py-3 border-2 border-gray-300 rounded-3xl text-sm font-semibold peer-checked:bg-(--btn-bg) peer-checked:text-(--primary-color) peer-checked:border-(--primary-color) hover:bg-gray-100 transition-colors duration-150 flex items-center justify-center md:text-lg"
+        >
+          {{ checkbox.choice_label }}
+        </label>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Errores -->
+    {% if form.food_category.errors %}
+      <div class="text-red-500 flex justify-center gap-1 md:text-lg">
+        *{{ form.food_category.errors }}
+      </div>
+    {% endif %}
+
+    <!-- Ingredientes -->
+    <div class="mt-8 w-full">
+      <h4 class="font-title ml-4 text-xl font-bold md:text-2xl">Ingredientes</h4>
+      {{ ingredients.management_form }}
+
+      <div
+        class="ingredients-container flex flex-col w-auto mx-4 mt-3 justify-around gap-2"
+      >
+        {% for form in ingredients %}
+        <div class="ingredient-item flex gap-2">
+          {{ form.id }}
+
+          <input
+            type="hidden"
+            name="{{ form.DELETE.name }}"
+            value="{{ form.DELETE.value|default:'off' }}"
+          />
+
+            {{ form.quantity.as_widget }}
+
+          <!-- Dropdown personalizado -->
+          <div
+            class="ingredient-unit-select relative min-w-15 h-10 cursor-pointer rounded-lg px-3 py-2 bg-(--bg-color) flex justify-between items-center"
+          >
+            <span class="ingredient-unit-selected font-bold md:w-20 xl:w-30">
+              {{ form.instance.get_unit_display }}
+            </span>
+            {% include "icons/dropdown.html" %}
+
+            <ul
+              class="ingredient-unit-options absolute right-0 left-0 top-10 mt-1 max-h-40 overflow-auto border border-gray-300 rounded-lg bg-white shadow-lg hidden z-10"
+            >
+              {% for value, label in form.unit.field.choices %}
+              <li
+                data-value="{{ value }}"
+                class="px-3 py-2 hover:bg-(--secondary-color-mod) cursor-pointer md:text-lg"
+              >
+                {{ label }}
+              </li>
+
+              {% endfor %}
+            </ul>
+            {{ form.unit.as_widget }}
+          </div>
+
+          {{ form.name.as_widget }}
+          <div class="flex items-center cursor-pointer">
+            <span
+              class="material-symbols-outlined text-gray-500 hover:text-red-400 active:text-red-400"
+            >
+              do_not_disturb_on
+            </span>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- Errores -->
+         {% if ingredients.errors %}
+          <div class="text-red-500 flex justify-center gap-1">
+            {% if ingredients.errors %}
+              *{{ ingredients.errors.0.name }}
+            {% endif %}
+          </div>
+         {% endif %}
+
+        <template class="ingredient-template">
+          <div class="ingredient-item flex gap-2">
+            {{ ingredients.empty_form.quantity }}
+
+            <!-- Dropdown personalizado -->
+            <div
+              class="ingredient-unit-select relative min-w-15 h-10 cursor-pointer rounded-lg px-3 py-2 bg-(--bg-color) flex justify-between items-center md:text-lg"
+            >
+              <span class="ingredient-unit-selected font-bold xl:w-30"
+                >{{ ingredients.empty_form.unit.field.choices.0.1 }}
+              </span>
+              {% include "icons/dropdown.html" %}
+
+              <ul
+                class="ingredient-unit-options absolute right-0 left-0 top-10 mt-1 max-h-40 overflow-auto border border-gray-300 rounded-lg bg-white shadow-lg hidden z-10"
+              >
+                {% for value, label in ingredients.empty_form.unit.field.choices %}
+
+                <li
+                  data-value="{{ value }}"
+                  class="px-3 py-2 hover:bg-(--secondary-color-mod) cursor-pointer"
+                >
+                  {{ label }}
+                </li>
+
+                {% endfor %}
+              </ul>
+              {{ ingredients.empty_form.unit }}
+            </div>
+
+            {{ ingredients.empty_form.name }}
+
+            <div class="flex items-center cursor-pointer ">
+              <span
+                class="material-symbols-outlined text-gray-500 hover:text-red-400 active:text-red-400"
+              >
+                do_not_disturb_on
+              </span>
+            </div>
+          </div>
+        </template>
+      </div>
+
+      <!-- Btn de añadir ingrediente -->
+      <div class="flex justify-center">
+        <button
+          type="button"
+          class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm"
+        >
+          <div class="flex items-center gap-2 text-(--primary-color) font-bold md:text-lg">
+            <span class="material-symbols-outlined"> add_circle </span
+            ><span>Añadir ingrediente</span>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- Pasos -->
+    {{ steps.management_form }}
+    <div id="steps-container" class="mx-2 mt-8">
+      <h3 class="font-title ml-2 mb-4 text-xl font-bold md:text-2xl">Instrucciones</h3>
+      {% for step in steps %}
+      <div class="step-item p-2">
+        {{ step.id }}
+        <div class="flex justify-between mb-4 items-center">
+          <p
+            class="text-sm font-medium step-label rounded-full p-2 bg-(--primary-color) h-8 w-8 flex items-center justify-center text-white font-primary"
+          >
+            {{ forloop.counter }}
+          </p>
+
+          <!-- Eliminar paso -->
+          <button
+            type="button"
+            class="cursor-pointer delete-step text-gray-500 text-sm mt-1 material-symbols-outlined hover:text-red-400 active:text-red-400"
+          >
+            delete
+          </button>
+        </div>
+
+        {{ step.description }}
+
+        <input
+          type="hidden"
+          name="{{ step.DELETE.name }}"
+          value="{{ step.DELETE.value|default:'off' }}"
+        />
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Añadir paso -->
+    <div class="flex items-center gap-2 text-(--primary-color) font-bold pb-2">
+      <button
+        type="button"
+        id="add-step"
+        class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm"
+      >
+        <div class="flex items-center gap-2 text-(--primary-color) font-bold">
+          <span class="material-symbols-outlined"> add </span>
+          <span>Añadir paso</span>
+        </div>
+      </button>
+    </div>
+  </div>
+</form>
+
+{% if request.user == recipe.user %} 
+  {% include "_includes/_delete_recipe_modal.html" %}
+{% endif %}
+</div>
+
+<script src="{% static 'js/create_step_create_view.js' %}" defer></script>
+<script src="{% static 'js/create_ingredient_create_view.js' %}" defer></script>
+<script src="{% static 'js/delete_step_create_view.js' %}" defer></script>
+<script src="{% static 'js/img_preview.js' %}" defer></script>
+<script src="{% static 'js/dropdown.js' %}" defer></script>
+<script src="{% static 'js/ingredients_dropdown.js' %}" defer></script>
+<script src="{% static 'js/delete_ingredient.js' %}" defer></script>
+<script src="{% static 'js/change_img_btn.js' %}" defer></script>
+<script src="{% static 'js/remove_img_btn.js' %}" defer></script>
+
+{% endblock %}

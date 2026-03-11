@@ -1,0 +1,93 @@
+{% load static %}
+
+<!-- Menú colapsable -->
+<nav
+  class="fixed bottom-0 bg-[#f5f8f5] text-gray-600 flex justify-between items-center w-full p-4 z-50 overflow-visible md:left-0 md:flex-col md:h-full md:w-[30dvw] md:justify-center md:gap-6 md:border-r border-gray-300 xl:w-[20dvw] 2xl:relative 2xl:my-auto 2xl:w-100 2xl:border-none"
+>
+  <!-- Iconos izquierda -->
+  <div
+    class="flex w-1/2 justify-between max-w-[28dvw] pl-4 md:flex-col md:pl-0 md:gap-6 md:w-full md:items-start md:ml-2"
+  >
+    <!-- Inicio -->
+    <a href="{% url 'home' %}" class="btn md:flex md:gap-4 md:items-center">
+      <span
+        class="{% if request.path == '/' %} text-(--primary-color){% endif %} scale-150"
+        ><span class="">{% include 'icons/home.html' %}</span></span
+      >
+      <span
+        class="hidden {% if request.path == '/' %} text-(--primary-color){% endif %} md:block md:text-lg md:font-bold"
+        >Inicio</span
+      >
+    </a>
+
+    <!-- Explorar recetas -->
+    <a
+      href="{% url 'recipes:recipe_list' %}"
+      class="btn md:flex md:gap-4 md:items-center"
+    >
+      <span
+        class="{% if request.path == '/recipes/list/' %} text-(--primary-color){% endif %} scale-150"
+        ><span class="">{% include 'icons/explore.html' %}</span></span
+      >
+      <span
+        class="hidden {% if request.path == '/recipes/list/' %} text-(--primary-color){% endif %} md:block md:text-lg md:font-bold"
+        >Recetas</span
+      >
+    </a>
+  </div>
+
+  <!-- Botón central -->
+  <a
+    href="{% url 'recipes:create_recipe' %}"
+    class="btn md:flex md:items-center md:gap-4"
+  >
+    <span
+      class="absolute left-1/2 -translate-x-1/2 -top-6 z-50 lg:-left-5 bg-(--primary-color) p-3 rounded-full text-white scale-150 border-2 shadow-lg shadow-green-500/50 active:scale-90 transition-transform md:relative md:left-0 md:top-0 md:translate-x-0 md:mr-0 md:scale-100"
+    >
+      <span>{% include "icons/add.html" %}</span>
+    </span>
+    <span
+      class="hidden {% if request.path == '/recipes/create/' %} text-(--primary-color){% endif %} md:block md:text-lg font-bold lg:relative lg:-left-5"
+      >Crear receta</span
+    >
+  </a>
+
+  <!-- Iconos derecha -->
+  <div
+    class="flex w-1/2 justify-between max-w-[28dvw] pr-4 md:flex-col md:pr-0 md:gap-6 md:w-full md:items-start md:ml-2"
+  >
+    <!-- Explorar perfiles -->
+    <a
+      href="{% url 'profiles:profiles_list' %}"
+      class="btn md:flex md:gap-4 md:items-center"
+    >
+      <span
+        class="{% if request.path == '/profiles/list/' and request %} text-(--primary-color){% endif %} scale-150"
+        >{% include 'icons/social.html' %}</span
+      >
+      <span
+        class="hidden {% if request.path == '/profiles/list/' %} text-(--primary-color){% endif %} md:block md:text-lg font-bold"
+        >Chefs</span
+      >
+    </a>
+
+    <!-- Mi perfil-->
+    <a
+      href="{% if request.user.is_authenticated%}
+      {% url 'profiles:profile_detail' request.user.profile.pk %}
+      {% else %}
+      {% url 'login' %}
+      {% endif %}"
+      class="btn md:flex md:gap-4 md:items-center"
+    >
+      <span
+        class="{% if request.user.is_authenticated %} {% if request.resolver_match.url_name == 'profile_detail' and request.resolver_match.kwargs.pk|stringformat:'s' == request.user.profile.pk|stringformat:'s' %} text-(--primary-color) {% endif %} {% endif %} scale-150"
+        >{% include 'icons/person.html' %}</span
+      >
+      <span
+        class="hidden {% if request.user.is_authenticated %} {% if request.resolver_match.url_name == 'profile_detail' and request.resolver_match.kwargs.pk|stringformat:'s' == request.user.profile.pk|stringformat:'s' %} text-(--primary-color) {% endif %} {% endif %} md:block md:text-lg font-bold"
+        >Mi perfil</span
+      >
+    </a>
+  </div>
+</nav>

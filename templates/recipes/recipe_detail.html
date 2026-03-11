@@ -1,0 +1,239 @@
+{% extends "general/layout.html" %} 
+{% load static %} 
+{% block head_title %}Recetify - Detalle de receta{% endblock head_title %} 
+{% block page_content %}
+
+<!-- Imagen -->
+{% if recipe.image %}
+<img
+  src="{{ recipe.image.url }}"
+  alt="{{ recipe.title }}"
+  class=" object-contain w-full md:max-h-[40dvh] xl:max-h-[50dvh]"
+/>
+{% endif %}
+
+<div class="bg-(--bg-color)">
+
+  <!-- Título -->
+  <h2 class="w-full pt-4 px-2 font-title font-bold text-2xl md:text-3xl">
+    {{ recipe.title|capfirst }}
+  </h2>
+
+  <!-- Descripción-->
+  <p class="w-full px-2 pb-4 pt-2 mb-6 font-primary md:text-lg">
+    {{ recipe.description|capfirst }}
+  </p>
+
+  <div class="2xl:flex">
+
+    <!-- Ingredientes -->
+    <div class="bg-white m-2 p-4 border border-gray-200 rounded-2xl 2xl:w-1/2 2xl:m-0 2xl:ml-2">
+      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">Ingredientes</h3>
+      {% for ingredient in recipe.ingredient.all %}
+      <div class="flex flex-col mb-6 relative justify-center">
+        <div class="check-toggle cursor-pointer">
+          <span
+            class="empty-check w-5 h-5 absolute border border-gray-300 rounded-full"
+          ></span>
+          <span
+            class="checked text-white absolute bg-(--primary-color) rounded-full hidden"
+            >{% include "icons/check.html" %}</span
+          >
+        </div>
+  
+        <div class="ml-8 grid grid-cols-2 gap-4 2xl:w-80">
+          <div class="flex">
+            {% if ingredient.quantity %}
+            <p class="font-bold md:text-lg">{{ ingredient.quantity|floatformat:"-2" }}</p>
+            {% endif %} 
+            {% if ingredient.unit != "none" %}
+            <p class="font-bold md:text-lg">{{ ingredient.unit }}</p>
+            {% endif %}
+          </div>
+          <p class="capitalize md:text-lg">{{ ingredient.name|capfirst }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  
+    <!-- Etiquetas -->
+    <div class="flex gap-2 mt-8 ml-2 bg-white m-2 py-4 pl-4 2xl:pr-4 border border-gray-200 rounded-2xl flex-col 2xl:w-1/2 2xl:mt-0">
+      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">Etiquetas</h3>
+      <div class="flex scrollbar-hide mr-2 overflow-x-scroll gap-2 2xl:flex 2xl:flex-col">
+        {% for category in recipe.food_category.all %}
+        <p
+        class="px-4 py-3 border-2 rounded-3xl text-sm font-semibold text-(--primary-color) border-(--primary-color) bg-(--btn-bg) flex items-center justify-center md:text-lg"
+        >
+          {{ category }}
+        </p>
+        {% endfor %}
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Pasos -->
+  <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">Instrucciones</h3>
+  {% for step in recipe.steps.all %}
+  <div class="m-2 flex gap-4">
+    <span
+      class="text-sm font-medium rounded-full p-2 bg-(--primary-color) h-8 min-w-8 w-auto flex items-center justify-center text-white font-primary md:text-lg"
+    >
+      {{ step.order }}
+    </span>
+    <p class="first-letter:uppercase md:text-lg">{{ step.description }}</p>
+  </div>
+  {% endfor %}
+
+  <!-- Datos de usuario -->
+  <div
+    class="mx-2 mt-8 p-4 flex items-center gap-6 bg-white border rounded-2xl border-gray-200"
+  >
+    <img
+      class="w-12 h-12 rounded-full border border-gray-300 object-cover outline-2 outline-gray-300"
+      src="{{ recipe.user.profile.profile_image_url }}"
+      alt="{{ recipe.user.profile.full_name_title }}"
+    />
+
+    <div>
+      <p class="text-gray-400 font-semibold md:text-lg">Receta de:</p>
+      <p class="font-bold md:text-lg">{{ recipe.user.profile.full_name_title }}</p>
+    </div>
+
+    {% if request.user.is_authenticated and recipe.user != request.user %}
+
+    <button
+      data-url="{% url 'profiles:toggle_follow' recipe.user.pk %}"
+      class="cursor-pointer follow-btn py-2 px-4 border rounded-full border-gray-300 font-bold bg-(--bg-color) ml-auto"
+    >
+      {% if following %}
+      Siguiendo
+      {% else %}
+      Seguir
+      {% endif %}
+    </button>
+    {% endif %}
+  </div>
+
+  <!-- Tiempo y Dificultad -->
+  <div class="flex mt-8 mb-8 mx-2 gap-3 md:text-lg xl: justify-around">
+    <div
+      class="bg-white w-100 p-2 border border-gray-200 rounded-2xl flex flex-col justify-center items-center"
+    >
+      <p class="text-(--primary-color) scale-125">
+        {% include "icons/timer.html" %}
+      </p>
+      <p class="text-gray-400 font-semibold">Tiempo</p>
+      <p class="font-bold">{{ recipe.time_data.display }}</p>
+    </div>
+    <div
+      class="bg-white w-100 p-2 border border-gray-200 rounded-2xl flex flex-col justify-center items-center"
+    >
+      <p class="text-(--primary-color) h-7 relative top-1">
+        {% include "icons/cutlerly.html" %}
+      </p>
+      <p class="relative top-0.5 text-gray-400 font-semibold">Dificultad</p>
+      <p class="relative top-0.5 font-bold">{{ recipe.difficulty }}</p>
+    </div>
+  </div>
+
+  <!-- Valoraciones, guardar receta y editar -->
+  <div class="border-t m-2 border-gray-200">
+    <h3 class="text-gray-400 font-semibold mt-8 md:text-2xl">Valoraciones</h3>
+
+    <div class="flex items-center justify-between gap-3">
+      <div class="text-3xl font-semibold">
+        {{ recipe.average_rating|floatformat:1 }}
+        <span class="text-sm text-gray-400 md:text-base">/10</span>
+      </div>
+
+      {% if request.user.is_authenticated %}
+      <button
+        type="button"
+        class="saveButton p-3 bg-white rounded-full border border-gray-300"
+        data-url="{% url 'recipes:save_recipe' recipe.pk %}"
+      >
+        <span id="filled_save" class="{% if not is_saved %}hidden{% endif %}">
+          {% include "icons/filled_save.html" %}
+        </span>
+
+        <span id="empty_save" class="{% if is_saved %}hidden{% endif %}">
+          {% include "icons/save.html" %}
+        </span>
+      </button>
+      {% endif %}
+    </div>
+
+    {% if user.is_authenticated and user.username != recipe.user.username %}
+    <form method="post" action="{% url 'recipes:recipe_detail' recipe.pk %}">
+      {% csrf_token %}
+
+      <div class="flex items-center gap-4 mt-2">
+
+        <!-- Estrellas -->
+        <div
+          id="rating-stars"
+          class="flex gap-1 w-full items-center text-3xl cursor-pointer"
+        >
+          {% for i in "0123456789" %}
+          <div class="relative star" data-star="{{ forloop.counter }}">
+
+            <!-- mitad izquierda -->
+            <div
+              class="absolute left-0 top-0 h-full w-1/2 z-10 half-star"
+              data-star="{{ forloop.counter }}"
+              data-half="left"
+            ></div>
+
+            <!-- mitad derecha -->
+            <div
+              class="absolute right-0 top-0 h-full w-1/2 z-10 half-star"
+              data-star="{{ forloop.counter }}"
+              data-half="right"
+            ></div>
+
+            <span class="text-gray-300 star-icon">★</span>
+          </div>
+          {% endfor %}
+          
+          <!-- Preview numérico -->
+          <div class="text-xl font-semibold ml-2">
+            <span id="rating-preview" class="text-gray-500">—</span>
+            <span class="text-sm text-gray-400 md:text-base">/10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input real -->
+      <input type="hidden" name="value" id="rating-input" />
+
+      <button
+        type="submit"
+        class="mt-4 bg-(--primary-color) text-white font-bold p-2 w-full rounded-2xl mb-2 md:text-lg"
+      >
+        Guardar valoración
+      </button>
+    </form>
+
+    {% elif user.username != recipe.user.username %} 
+    {{ rating_form.value }} 
+    {% endif %}
+  </div>
+
+  {% if request.user == recipe.user %}
+  <div class="w-full flex">
+    <a
+      href="{% url 'recipes:update_recipe' recipe.pk %}"
+      class="w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm md:text-lg"
+      >Editar receta</a
+    >
+    {% endif %}
+  </div>
+</div>
+
+<script src="{% static 'js/save_recipe.js' %}" defer></script>
+<script src="{% static 'js/ingredient_check.js' %}" defer></script>
+<script src="{% static 'js/toggle_follow_ajax.js' %}" defer></script>
+<script src="{% static 'js/ratings.js' %}" defer></script>
+
+{% endblock %}
