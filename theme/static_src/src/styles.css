@@ -93,10 +93,6 @@
   }
 }
 
-/* Flowbite config */
-@plugin "flowbite/plugin";
-@source "../../node_modules/flowbite";
-
 /* Indica dónde Tailwind debe buscar clases */
 @source "../templates";
 @source "../../../templates";
