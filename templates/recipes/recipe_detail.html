@@ -30,7 +30,7 @@
     <div class="bg-white m-2 p-4 border border-gray-200 rounded-2xl 2xl:w-1/2 2xl:m-0 2xl:ml-2">
       <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">Ingredientes</h3>
       {% for ingredient in recipe.ingredient.all %}
-      <div class="flex flex-col mb-6 relative justify-center">
+      <div class="flex flex-col mb-6 relative justify-center border-b border-gray-300 pb-2">
         <div class="check-toggle cursor-pointer">
           <span
             class="empty-check w-5 h-5 absolute border border-gray-300 rounded-full"
@@ -75,18 +75,19 @@
   <!-- Pasos -->
   <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">Instrucciones</h3>
   {% for step in recipe.steps.all %}
-  <div class="m-2 flex gap-4">
+  <div class="m-2 flex items-center gap-4">
     <span
       class="text-sm font-medium rounded-full p-2 bg-(--primary-color) h-8 min-w-8 w-auto flex items-center justify-center text-white font-primary md:text-lg"
     >
       {{ step.order }}
     </span>
-    <p class="first-letter:uppercase md:text-lg">{{ step.description }}</p>
+    <p class="first-letter:uppercase md:text-lg font-primary">{{ step.description }}</p>
   </div>
   {% endfor %}
 
   <!-- Datos de usuario -->
-  <div
+  <a
+    href="{% url 'profiles:profile_detail' recipe.user.pk %}"
     class="mx-2 mt-8 p-4 flex items-center gap-6 bg-white border rounded-2xl border-gray-200"
   >
     <img
@@ -113,7 +114,7 @@
       {% endif %}
     </button>
     {% endif %}
-  </div>
+  </a>
 
   <!-- Tiempo y Dificultad -->
   <div class="flex mt-8 mb-8 mx-2 gap-3 md:text-lg xl: justify-around">
@@ -150,7 +151,7 @@
       {% if request.user.is_authenticated %}
       <button
         type="button"
-        class="saveButton p-3 bg-white rounded-full border border-gray-300"
+        class="saveButton p-3 cursor-pointer bg-white rounded-full border border-gray-300"
         data-url="{% url 'recipes:save_recipe' recipe.pk %}"
       >
         <span id="filled_save" class="{% if not is_saved %}hidden{% endif %}">
@@ -209,7 +210,7 @@
 
       <button
         type="submit"
-        class="mt-4 bg-(--primary-color) text-white font-bold p-2 w-full rounded-2xl mb-2 md:text-lg"
+        class="mt-4 cursor-pointer bg-(--primary-color) text-white font-bold p-2 w-full rounded-2xl mb-2 md:text-lg"
       >
         Guardar valoración
       </button>
@@ -227,8 +228,8 @@
       class="w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm md:text-lg"
       >Editar receta</a
     >
-    {% endif %}
   </div>
+  {% endif %}
 </div>
 
 <script src="{% static 'js/save_recipe.js' %}" defer></script>

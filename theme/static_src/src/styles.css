@@ -18,31 +18,7 @@
     scrollbar-width: none;
   }
 
-  .star {
-    position: relative;
-  }
 
-  .star-icon {
-    color: #d1d5db; /* gris */
-    transition: color 0.15s ease;
-  }
-
-  .star.full .star-icon {
-    color: #27ae60;
-  }
-
-  .star.half .star-icon {
-    color: #d1d5db;
-  }
-
-  .star.half::before {
-    content: "★";
-    position: absolute;
-    left: 0;
-    width: 50%;
-    overflow: hidden;
-    color: #27ae60;
-  }
 
   .active-slider {
     color: black;
@@ -90,6 +66,32 @@
 @layer utilities {
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
+  }
+
+  .star {
+    position: relative;
+  }
+
+  .star-icon {
+    color: #d1d5db; /* gris */
+    transition: color 0.15s ease;
+  }
+
+  .star.full .star-icon {
+    color: #27ae60;
+  }
+
+  .star.half .star-icon {
+    color: #d1d5db;
+  }
+
+  .star.half::before {
+    content: "★";
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #27ae60;
   }
 }
 

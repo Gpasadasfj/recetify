@@ -10,15 +10,16 @@
     <div
       class="relative w-full max-w-md md:w-auto md:mt-4 xl:max-w-dvw xl:mr-4"
     >
-      <div class="block absolute left-5 top-3.5 text-gray-500">
+      <div class="block absolute left-5.5 top-3 text-gray-500">
         {% include "icons/search.html" %}
       </div>
+
       <input
         type="text"
         name="search"
         value="{{ request.GET.search }}"
         placeholder="Buscador de recetas"
-        class="pl-9 rounded-2xl justify-center flex w-[94dvw] m-2 border-transparent focus:outline-none focus:ring-0 focus:border-green-300 md:w-[67dvw] lg:w-[68dvw] xl:w-full"
+        class="pl-9 rounded-2xl justify-center flex bg-white h-10 w-[94dvw] m-2 border-transparent focus:outline-none focus:ring-0 focus:border-green-300 md:w-[67dvw] lg:w-[68dvw] xl:w-full"
       />
       <button
         class="absolute cursor-pointer right-3 top-1 md:left-[63dvw] lg:left-[65dvw] xl:left-276 2xl:left-328"
@@ -68,16 +69,18 @@
   <!-- Feed -->
   <section class="p-2">
     <h2 class="text-2xl font-bold font-title">
-      {% if request.GET.search and request.GET.max_time %} Recetas rápidas con
-      "{{ request.GET.search }}" {% elif request.GET.search and
-      request.GET.food_category %} {{ request.GET.food_category }} con "{{
-      request.GET.search }}" {% elif request.GET.search and
-      request.GET.difficulty == "Fácil" %} Recetas fáciles con "{{
-      request.GET.search }}" {% elif request.GET.search %} Resultados para "{{
-      request.GET.search }}" {% elif request.GET.max_time == "15" %} Recetas
-      rápidas {% elif request.GET.difficulty == "Fácil" %} Recetas fáciles {%
-      elif request.GET.food_category %} Recetas de {{
-      request.GET.food_category|lower }} {% endif %}
+      {% if request.GET.search and request.GET.max_time %} 
+      Recetas rápidas con "{{ request.GET.search }}" 
+      {% elif request.GET.search and request.GET.food_category %} 
+      {{ request.GET.food_category }} con "{{ request.GET.search }}" 
+      {% elif request.GET.search and request.GET.difficulty == "Fácil" %} 
+      Recetas fáciles con "{{ request.GET.search }}" 
+      {% elif request.GET.search %} 
+      Resultados para "{{ request.GET.search }}" 
+      {% elif request.GET.max_time == "15" %} Recetas rápidas 
+      {% elif request.GET.difficulty == "Fácil" %} Recetas fáciles 
+      {% elif request.GET.food_category %} 
+      Recetas de {{ request.GET.food_category|lower }} {% endif %}
     </h2>
 
     <div
@@ -153,7 +156,7 @@
 
     <!-- Si no hay recetas y sigues a alguien -->
     {% elif request.user.is_authenticated and request.GET.max_time or request.GET.food_category or request.GET.search or request.GET.difficulty %}
-    <p>Sin recetas...</p>
+    <p class="text-2xl mt-4">Sin recetas...</p>
 
     {% else %}
     <!-- Mensaje por defecto si no hay seguidos -->

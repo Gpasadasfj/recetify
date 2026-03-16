@@ -87,7 +87,7 @@ class StepForm(forms.ModelForm):
             "description": forms.Textarea(attrs={
                 "rows": 3,
                 "placeholder": "Describe el paso...",
-                "class": "rounded-2xl w-full border-gray-300 shadow-md focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none"
+                "class": "rounded-2xl p-2 w-full border border-gray-300 shadow-md focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none"
             })
         }
 
@@ -114,7 +114,7 @@ class IngredientForm(forms.ModelForm):
             }),
             "unit": forms.Select(attrs={"class": "hidden"}),
             "name": forms.TextInput(attrs={
-                "placeholder": "Nombre del ingrediente",
+                "placeholder": "  Nombre del ingrediente",
                 "class": "rounded-xl max-w-45 border border-gray-300 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:max-w-[60dvw] md:w-[60dvw]"
             })
         }

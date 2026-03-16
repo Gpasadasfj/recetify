@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (savedBtn.classList.contains("active-slider")) return;
 
     savedBtn.classList.add("active-slider");
+    savedBtn.classList.add("text-(--primary-color)")
     recipesBtn.classList.remove("active-slider");
+    recipesBtn.classList.remove("text-(--primary-color)");
+
 
     if (recipes) {
       recipes.classList.add("hidden");
@@ -40,7 +43,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (recipesBtn.classList.contains("active-slider")) return;
 
     recipesBtn.classList.add("active-slider");
+    recipesBtn.classList.add("text-(--primary-color)")
     savedBtn.classList.remove("active-slider");
+    savedBtn.classList.remove("text-(--primary-color)")
 
     if (recipes) {
       recipes.classList.remove("hidden");

@@ -1,7 +1,10 @@
 const followButtons = document.querySelectorAll(".follow-btn");
 
 followButtons.forEach((btn) => {
-  btn.addEventListener("click", async () => {
+  btn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
     const csrfToken = document
       .querySelector('meta[name="csrf-token"]')
       .getAttribute("content");

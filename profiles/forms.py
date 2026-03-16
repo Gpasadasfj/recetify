@@ -5,7 +5,7 @@ from .models import UserProfile
 
 BASE_CLASS = "w-full pl-10 py-2 mt-2 rounded-xl bg-(--bg-color) border border-gray-300 font-bold text-gray-500 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400"
 
-BASE_CLASS_USER_PROFILE = "w-full px-4 py-2 mt-2 rounded-xl bg-(--bg-color) border border-gray-300 font-bold text-gray-500 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400"
+BASE_CLASS_USER_PROFILE = "w-full cursor-pointer px-4 py-2 mt-2 rounded-xl bg-(--bg-color) border border-gray-300 font-bold text-gray-500 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400"
 
 
 class UserForm(forms.ModelForm):
