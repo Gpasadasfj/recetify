@@ -126,7 +126,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         return self.render_to_response(context)
 
     def get_success_url(self):
-        profile_pk = self.request.user.pk
+        profile_pk = self.request.user.profile.pk
         return reverse("profiles:profile_detail", kwargs={"pk": profile_pk})
 
 
