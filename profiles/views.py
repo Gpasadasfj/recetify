@@ -119,7 +119,7 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
             request.FILES,
             instance=self.get_object()
         )
-        user_form = UserForm(request.POST, request.FILES, instance=request.user)
+        user_form = UserForm(request.POST, instance=request.user)
 
         if profile_form.is_valid() and user_form.is_valid():
             update_profile(profile_form, user_form)
