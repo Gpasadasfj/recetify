@@ -22,5 +22,5 @@ def toggle_follow(follower, following):
 
 @transaction.atomic
 def update_profile(profile_form, user_form):
-    profile_form.save(),
+    profile_form.save()
     user_form.save()
