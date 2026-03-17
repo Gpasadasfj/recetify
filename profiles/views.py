@@ -114,7 +114,11 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        profile_form = self.get_form()
+        profile_form = UserProfileForm(
+            request.POST,
+            request.FILES,
+            instance=self.get_object()
+        )
         user_form = UserForm(request.POST, request.FILES, instance=request.user)
 
         if profile_form.is_valid() and user_form.is_valid():
