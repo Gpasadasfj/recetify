@@ -10,7 +10,7 @@
   class="p-3 flex sticky top-0 z-10 justify-between items-center bg-white md:text-lg"
 >
   <a class="text-gray-500 font-medium" href="{% url 'home' %}"> Cancelar </a>
-  <h1 class="text-xl font-semibold font-title mr-3 md:text-2xl">
+  <h1 class="text-xl font-semibold font-text mr-3 md:text-2xl">
     {% if object %}Editar receta {% else %} Nueva receta {% endif %}
   </h1>
   <button
@@ -268,7 +268,7 @@
 
     <!-- Ingredientes -->
     <div class="mt-8 w-full">
-      <h4 class="font-title ml-4 text-xl font-bold md:text-2xl">Ingredientes</h4>
+      <h4 class="font-title ml-4 mb-8 text-xl font-bold md:text-2xl">Ingredientes</h4>
       {{ ingredients.management_form }}
 
       <div
@@ -378,7 +378,7 @@
       <div class="flex justify-center">
         <button
           type="button"
-          class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm"
+          class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-xl px-4 py-2 text-sm lg:w-auto lg:px-6"
         >
           <div class="flex items-center gap-2 text-(--primary-color) font-bold md:text-lg">
             <span class="material-symbols-outlined"> add_circle </span
@@ -423,13 +423,13 @@
     </div>
 
     <!-- Añadir paso -->
-    <div class="flex items-center gap-2 text-(--primary-color) font-bold pb-2">
+    <div class="flex w-full justify-center gap-2 text-(--primary-color) font-bold pb-2">
       <button
         type="button"
         id="add-step"
-        class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm"
+        class="cursor-pointer add-ingredient w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm lg:w-auto lg:px-6"
       >
-        <div class="flex items-center gap-2 text-(--primary-color) font-bold">
+        <div class="flex items-center gap-2 text-(--primary-color) font-bold md:text-lg">
           <span class="material-symbols-outlined"> add </span>
           <span>Añadir paso</span>
         </div>

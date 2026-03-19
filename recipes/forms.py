@@ -39,11 +39,11 @@ class RecipeForm(forms.ModelForm):
         }
         widgets = {
             "title": forms.TextInput(attrs={
-                "class": "border-none w-full pt-4 pl-4 pr-4 font-title font-bold text-2xl placeholder:text-gray-400 focus:ring-0 md:text-3xl",
+                "class": "border-none w-full pt-4 border-none pl-4 pr-4 font-title font-bold text-2xl placeholder:text-gray-400 md:text-3xl focus:outline-none focus:ring-0",
                 "placeholder": "Nombre de la Receta"
             }),
             "description": forms.Textarea(attrs={
-                "class": "border-none w-full pl-4 pr-4 pb-4 pt-0 font-primary text-s placeholder:text-gray-400 focus:ring-0 md:text-lg",
+                "class": "border-none w-full pl-4 pr-4 pb-4 pt-0 font-primary text-s focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:ring-0 md:text-lg",
                 "rows": 2,
                 "placeholder": "Añade una breve descripción..."
             }),
