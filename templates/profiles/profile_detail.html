@@ -38,11 +38,11 @@ Recetify - Lista de perfiles
   {% endif %}
 
   <!-- Editar o seguir usuario -->
-  <div>
+  <div class="w-full px-2">
     {% if request.user == profile.user %}
     <a
       href="{% url 'profiles:edit_profile' %}"
-      class="w-[90dvw] justify-center mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl md:w-[68dvw] 2xl:w-320"
+      class="w-full justify-center mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl xl:w-1/4"
       >Editar perfil</a
     >
     {% endif %} 
@@ -50,7 +50,7 @@ Recetify - Lista de perfiles
     {% if profile.user != request.user %}
     <button
       data-url="{% url 'profiles:toggle_follow' profile.pk %}"
-      class="follow-btn cursor-pointer w-[90dvw] justify-center gap-1 mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl md:w-[68dvw] 2xl:w-320"
+      class="follow-btn cursor-pointer w-[90dvw] justify-center gap-1 mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl "
     >
       {% if following %}Siguiendo{% else %}Seguir{% endif %}
     </button>
