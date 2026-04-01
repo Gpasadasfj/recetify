@@ -12,7 +12,7 @@
   </a>
 
   {% if not request.user.is_authenticated %}
-  <div class="text-sm font-bold gap-2 flex items-center text-black">
+  <div class="text-sm mr-4 font-bold gap-2 flex items-center text-black">
     <a
       href="{% url 'login' %}"
       class="cursor-pointer hover:underline md:text-base"
@@ -20,7 +20,7 @@
     >
     <a
       href="{% url 'register' %}"
-      class="cursor-pointer mr-4 bg-(--primary-color) py-2 px-4 rounded-full md:text-base"
+      class="cursor-pointer bg-(--primary-color) py-2 px-4 rounded-full md:text-base"
       >Regístrate</a
     >
     {% else %}
