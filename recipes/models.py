@@ -77,12 +77,12 @@ class Recipe(models.Model):
 class Ingredient(models.Model):
 
     class Unit(models.TextChoices):
-        NONE = "none", "-" 
+        NONE = "al gusto", "-" 
         GRAM = "g", "g"
         KILOGRAM = "kg", "kg"
         MILLILITER = "ml", "ml"
         LITER = "L", "L"
-        UNIT = "u", "uds"
+        UNIT = "", "uds"
         TABLESPOON = "cda", "cda"
         TEASPOON = "cdta", "cdta"
 

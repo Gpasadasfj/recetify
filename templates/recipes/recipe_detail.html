@@ -50,7 +50,7 @@
             <p class="font-bold md:text-lg">{{ ingredient.unit }}</p>
             {% endif %}
           </div>
-          <p class="capitalize md:text-lg">{{ ingredient.name|capfirst }}</p>
+          <p class="md:text-lg">{{ ingredient.name|capfirst }}</p>
         </div>
       </div>
       {% endfor %}
@@ -75,13 +75,13 @@
   <!-- Pasos -->
   <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">Instrucciones</h3>
   {% for step in recipe.steps.all %}
-  <div class="m-2 flex items-center gap-4">
+  <div class="m-2 flex items-baseline gap-4">
     <span
       class="text-sm font-medium rounded-full p-2 bg-(--primary-color) h-8 min-w-8 w-auto flex items-center justify-center text-white font-primary md:text-lg"
     >
       {{ step.order }}
     </span>
-    <p class="first-letter:uppercase md:text-lg font-primary">{{ step.description }}</p>
+    <p class="first-letter:uppercase w-full md:text-lg font-primary bg-white p-2 border border-gray-200 rounded-2xl">{{ step.description }}</p>
   </div>
   {% endfor %}
 
