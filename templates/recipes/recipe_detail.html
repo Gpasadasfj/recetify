@@ -75,9 +75,9 @@
   <!-- Pasos -->
   <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">Instrucciones</h3>
   {% for step in recipe.steps.all %}
-  <div class="m-2 flex items-baseline gap-4">
+  <div class="m-2 flex gap-4">
     <span
-      class="text-sm font-medium rounded-full p-2 bg-(--primary-color) h-8 min-w-8 w-auto flex items-center justify-center text-white font-primary md:text-lg"
+      class="text-sm font-medium mt-1.5 rounded-full p-2 bg-(--primary-color) h-8 min-w-8 w-auto flex items-center justify-center text-white font-primary md:text-lg"
     >
       {{ step.order }}
     </span>
