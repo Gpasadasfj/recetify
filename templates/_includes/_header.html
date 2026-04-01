@@ -1,9 +1,9 @@
 {% load static %}
 <header
-  class="bg-white shadow-lg text-white pl-6 py-4 flex items-center justify-between"
+  class="bg-white shadow-lg text-white py-4 flex items-center justify-between"
 >
   <!-- Logo -->
-  <a href="{% url 'home' %}" class="flex items-center">
+  <a href="{% url 'home' %}" class="flex pl-4 items-center">
     <img
       class="w-24 font-extrabold md:w-32"
       src="{% static 'img/recetify-logo.svg' %}"
@@ -32,7 +32,7 @@
       >
         Cerrar sesión
       </button>
-    </form>
+
     {% endif %}
   </div>
 </header>
