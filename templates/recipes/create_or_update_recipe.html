@@ -5,30 +5,30 @@
 {% endblock head_title %} 
 {% block page_content %}
 
-<div class="container">
-<header
-  class="p-3 flex sticky top-0 z-10 justify-between items-center bg-white md:text-lg"
->
-  <a class="text-gray-500 font-medium" href="{% url 'home' %}"> Cancelar </a>
-  <h1 class="text-xl font-semibold font-text mr-3 md:text-2xl">
-    {% if object %}Editar receta {% else %} Nueva receta {% endif %}
-  </h1>
-  <button
-    class="cursor-pointer font-bold text-(--primary-color)"
-    type="submit"
-    form="create-recipe"
-  >
-    Post
-  </button>
-</header>
+<div class="container pb-15 md:pb-0">
 
 <form
   method="post"
   id="create-recipe"
-  class="space-y-5 flex flex-col"
+  class="flex flex-col"
   enctype="multipart/form-data"
 >
   {% csrf_token %}
+
+  <div
+    class="p-3 flex sticky top-0 z-10 justify-between items-center bg-white md:text-lg"
+  >
+    <a class="text-gray-500 font-medium" href="{% url 'home' %}"> Cancelar </a>
+    <h1 class="text-xl font-semibold font-text mr-3 md:text-2xl">
+      {% if object %}Editar receta {% else %} Nueva receta {% endif %}
+    </h1>
+    <button
+      class="cursor-pointer font-bold text-(--primary-color)"
+      type="submit"
+    >
+      Post
+    </button>
+  </div>
 
   <!-- Imagen de la receta -->
   <div

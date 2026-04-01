@@ -115,7 +115,7 @@ class IngredientForm(forms.ModelForm):
             "unit": forms.Select(attrs={"class": "hidden"}),
             "name": forms.TextInput(attrs={
                 "placeholder": "  Nombre del ingrediente",
-                "class": "rounded-xl max-w-45 border border-gray-300 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:max-w-[60dvw] md:w-[60dvw]"
+                "class": "rounded-xl max-w-45 px-2 border border-gray-300 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:max-w-[60dvw] md:w-[60dvw]"
             })
         }
 
