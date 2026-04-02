@@ -50,7 +50,7 @@ Recetify - Lista de perfiles
     {% if profile.user != request.user %}
     <button
       data-url="{% url 'profiles:toggle_follow' profile.pk %}"
-      class="follow-btn cursor-pointer w-[90dvw] justify-center gap-1 mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl "
+      class="follow-btn cursor-pointer w-[95%] justify-center gap-1 mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl "
     >
       {% if following %}Siguiendo{% else %}Seguir{% endif %}
     </button>
@@ -104,7 +104,7 @@ Recetify - Lista de perfiles
 
   <!-- Recetas guardadas -->
   {% if saved_recipes %}
-  <div id="saved_recipes" class="grid-cols-2 mt-4 mx-2 hidden xl:grid-cols-3">
+  <div id="saved_recipes" class="grid-cols-2 mt-4 pb-4 mx-2 hidden xl:grid-cols-3">
     {% for recipe in saved_recipes %} 
     {% include "_includes/_recipe_card.html" with recipe=recipe only %} 
     {% endfor %}
@@ -120,7 +120,7 @@ Recetify - Lista de perfiles
 
   <!-- Recetas propias -->
   {% if recipes %}
-  <div id="recipes" class="grid grid-cols-2 mt-4 mx-2 gap-1 xl:grid-cols-3">
+  <div id="recipes" class="grid grid-cols-2 mt-4 pb-4 mx-2 gap-1 xl:grid-cols-3">
     {% for recipe in recipes %} 
     {% include "_includes/_recipe_card.html" with recipe=recipe only %} 
     {% endfor %}
