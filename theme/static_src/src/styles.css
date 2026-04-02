@@ -18,7 +18,12 @@
     scrollbar-width: none;
   }
 
-
+  .step {
+    @apply m-2 
+    flex 
+    gap-4
+    items-baseline
+  }
 
   .active-slider {
     color: black;
