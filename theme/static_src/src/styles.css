@@ -62,6 +62,10 @@
 }
 
 @layer utilities {
+    .items-baseline {
+    align-items: baseline;
+  }
+  
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
