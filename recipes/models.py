@@ -77,7 +77,7 @@ class Recipe(models.Model):
 class Ingredient(models.Model):
 
     class Unit(models.TextChoices):
-        NONE = "al gusto", "-" 
+        NONE = "-", "-" 
         GRAM = "g", "g"
         KILOGRAM = "kg", "kg"
         MILLILITER = "ml", "ml"
