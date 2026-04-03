@@ -1,4 +1,5 @@
 from datetime import timedelta
+from decimal import Decimal
 from django import forms
 from django.forms import inlineformset_factory
 from .models import Ingredient, Rating, Recipe, Steps
@@ -92,6 +93,7 @@ class StepForm(forms.ModelForm):
         }
 
 class IngredientForm(forms.ModelForm):
+        
     class Meta:
         model = Ingredient
         fields = ["quantity", "unit", "name"]
@@ -109,6 +111,7 @@ class IngredientForm(forms.ModelForm):
         }
         widgets = {
             "quantity": forms.NumberInput(attrs={
+                "step": "0.5",
                 "placeholder": "10",
                 "class": "w-15 rounded-xl text-center border border-gray-300 font-bold text-gray-500 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:w-20"
             }),
