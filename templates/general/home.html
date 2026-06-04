@@ -72,15 +72,15 @@
   <section class="p-2">
     <h2 class="text-2xl font-bold font-title">
       {% if request.GET.search and request.GET.max_time %} 
-      {% trans "Recetas rápidas con " %}"{{ request.GET.search }}" 
+      {% trans "Recetas rápidas con " %} "{{ request.GET.search }}" 
       {% elif request.GET.search and request.GET.food_category == "Preentreno" %} 
-      {% trans "Preentreno con" %} {{ request.GET.search }}" 
+      {% trans "Preentreno con" %} "{{ request.GET.search }}" 
       {% elif request.GET.search and request.GET.food_category == "Postentreno" %} 
-      {% trans "Postentreno con " %} {{ request.GET.search }}" 
+      {% trans "Postentreno con " %} "{{ request.GET.search }}" 
       {% elif request.GET.search and request.GET.difficulty == "Fácil" %} 
       {% trans "Recetas fáciles con " %}"{{ request.GET.search }}" 
       {% elif request.GET.search %} 
-      {% trans "Resultados para " %}"{{ request.GET.search }}" 
+      {% trans "Resultados para " %} "{{ request.GET.search }}" 
       {% elif request.GET.max_time == "15" %} 
       {% trans "Recetas rápidas" %} 
       {% elif request.GET.difficulty == "Fácil" %} 
