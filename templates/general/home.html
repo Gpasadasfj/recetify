@@ -85,6 +85,10 @@
       {% elif request.GET.difficulty == "Fácil" %} {% trans "Recetas fáciles" %} 
       {% elif request.GET.food_category == "Cena" %} 
       {% trans "Recetas de Cena " %} {% endif %}
+      {% elif request.GET.food_category == "Preentreno" %} 
+      {% trans "Recetas de Preentreno" %} {% endif %}
+      {% elif request.GET.food_category == "Aperitivo" %} 
+      {% trans "Recetas de Aperitivo" %} {% endif %}
     </h2>
 
     <div
