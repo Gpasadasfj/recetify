@@ -84,7 +84,7 @@
       {% elif request.GET.max_time == "15" %} {% trans "Recetas rápidas" %} 
       {% elif request.GET.difficulty == "Fácil" %} {% trans "Recetas fáciles" %} 
       {% elif request.GET.food_category == "Cena" %} 
-      {% trans "Recetas de Cena " %}{{ request.GET.food_category|lower }} {% endif %}
+      {% trans "Recetas de Cena " %} {% endif %}
     </h2>
 
     <div
