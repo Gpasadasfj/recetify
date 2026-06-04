@@ -12,7 +12,7 @@
     <!-- FILTROS -->
     <!-- Nombre -->
     <div class="relative mt-4">
-      <input type="text" placeholder="Buscador por nombre" name="search" class="rounded-2xl bg-white h-10 pl-9 w-full border-gray-400 focus:ring focus:ring-green-400 focus:border-green-400">
+      <input type="text" placeholder='{% trans "Buscador por nombre" %}' name="search" class="rounded-2xl bg-white h-10 pl-9 w-full border-gray-400 focus:ring focus:ring-green-400 focus:border-green-400">
       <span class="absolute bottom-3 left-3 scale-125">{% include "icons/search.html" %}</span>
     </div>
 
@@ -172,14 +172,14 @@
   
     <ul>
       {% if recipes %}
-  <div id="recipes" class="grid grid-cols-2 mt-4 mx-2 gap-1 xl:grid-cols-3 md:gap-2">
-    {% for recipe in recipes %}
-      {% include "_includes/_recipe_card.html" with recipe=recipe only %}
-    {% endfor %}
+        <div id="recipes" class="grid grid-cols-2 mt-4 mx-2 gap-1 xl:grid-cols-3 md:gap-2">
+          {% for recipe in recipes %}
+            {% include "_includes/_recipe_card.html" with recipe=recipe only %}
+          {% endfor %}
   </div>
   {% endif %}
   </ul>
-</div>
+
 
 <script src="{% static 'js/time_filter.js' %}" defer></script>
 {% endblock %}

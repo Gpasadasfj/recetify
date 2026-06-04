@@ -14,7 +14,10 @@
     <!-- Overlay oscuro -->
     <div class="absolute inset-0 bg-black/40"></div>
     <p
-      class="absolute text-black font-bold top-3 left-3 px-2 text-xs rounded-full {% if recipe.difficulty.name == 'Fácil' %} bg-(--primary-color) {% endif %} {% if recipe.difficulty.name == 'Medio' %} bg-amber-300 {% endif %} {% if recipe.difficulty.name == 'Difícil' %} bg-red-500 {% endif %}"
+      class="absolute text-black font-bold top-3 left-3 px-2 text-xs rounded-full 
+      {% if recipe.difficulty.name == 'Fácil' or recipe.difficulty.name == "Easy" %} bg-(--primary-color) {% endif %} 
+      {% if recipe.difficulty.name == 'Medio' or recipe.difficulty.name == "Medium" %} bg-amber-300 {% endif %} 
+      {% if recipe.difficulty.name == 'Difícil' or recipe.difficulty.name == "Hard" %} bg-red-500 {% endif %}"
     >
       {{ recipe.difficulty.name }}
     </p>

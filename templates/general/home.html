@@ -20,7 +20,7 @@
         type="text"
         name="search"
         value="{{ request.GET.search }}"
-        placeholder="Buscador de recetas"
+        placeholder='{% trans "Buscador de recetas" %}'
         class="pl-9 rounded-2xl justify-center flex bg-white h-10 w-[94dvw] my-2 border-transparent focus:outline-none focus:ring-0 focus:border-green-300 md:w-[67dvw] lg:w-[68dvw] xl:w-full"
       />
       <button
@@ -111,9 +111,9 @@
           <!-- Dificultad -->
           <p
             class="absolute text-black font-bold top-3 left-3 px-2 rounded-full 
-            {% if recipe.difficulty.name == 'Fácil' %} bg-(--primary-color) {% endif %} 
-            {% if recipe.difficulty.name == 'Medio' %} bg-amber-300 {% endif %} 
-            {% if recipe.difficulty.name == 'Difícil' %} bg-red-500 {% endif %}"
+            {% if recipe.difficulty.name == 'Fácil' or recipe.difficulty.name == "Easy" %} bg-(--primary-color) {% endif %} 
+            {% if recipe.difficulty.name == 'Medio' or recipe.difficulty.name == "Medium" %} bg-amber-300 {% endif %} 
+            {% if recipe.difficulty.name == 'Difícil' or recipe.difficulty.name == "Hard" %} bg-red-500 {% endif %}"
           >
             {{ recipe.difficulty.name }}
           </p>
