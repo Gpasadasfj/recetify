@@ -77,6 +77,8 @@
       {% trans "Preentreno con" %} "{{ request.GET.search }}" 
       {% elif request.GET.search and request.GET.food_category == "Postentreno" %} 
       {% trans "Postentreno con " %} "{{ request.GET.search }}" 
+      {% elif request.GET.search and request.GET.food_category == "Aperitivo" %} 
+      {% trans "Aperitivo con " %} "{{ request.GET.search }}"
       {% elif request.GET.search and request.GET.difficulty == "Fácil" %} 
       {% trans "Recetas fáciles con " %}"{{ request.GET.search }}" 
       {% elif request.GET.search %} 
