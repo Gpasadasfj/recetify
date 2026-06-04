@@ -1,0 +1,36 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-06-03 09:04+0200\n"
+"PO-Revision-Date: 2026-06-03 09:05+0200\n"
+"Last-Translator: Francisco Javier García Pasadas <javgarpas@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Translated-Using: django-rosetta 0.10.3\n"
+
+#: recetify/settings.py:152
+msgid "Español"
+msgstr "Spanish"
+
+#: recetify/settings.py:153
+msgid "Inglés"
+msgstr "English"
+
+#: templates/_includes/_delete_profile_modal.html:9
+msgid "Eliminar perfil"
+msgstr "Delete profile"
+
+#: templates/_includes/_header.html:31
+msgid "Cambiar"
+msgstr "Change"

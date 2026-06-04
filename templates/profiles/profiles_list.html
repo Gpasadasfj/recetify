@@ -1,6 +1,10 @@
 {% extends "general/layout.html" %} 
+
 {% load static %} 
-{% block head_title %}Recetify - Lista de perfiles{% endblock head_title %} 
+{% load i18n %}
+
+{% block head_title %}{% trans "Recetify - Lista de perfiles" %}{% endblock head_title %} 
+
 {% block page_content %}
 <div class="container p-2">
   <form method="get">
@@ -50,7 +54,7 @@
           data-url="{% url 'profiles:toggle_follow' profile.pk %}"
           class="cursor-pointer follow-btn px-4 py-2 bg-green-400 text-white font-bold rounded-2xl whitespace-nowrap z-10"
         >
-          {% if profile.id in following_ids %} Siguiendo {% else %} Seguir 
+          {% if profile.id in following_ids %} {% trans "Siguiendo" %} {% else %} {% trans "Seguir" %} 
           {% endif %}
         </button>
         {% endif %}

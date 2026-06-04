@@ -1,8 +1,12 @@
 {% extends "general/layout.html" %} 
+
 {% load static %} 
+{% load i18n %}
+
 {% block head_title %}
-  Recetify - {% if object %} Editar receta {% else %} Crear nueva receta {% endif %} 
+  Recetify - {% if object %} {% trans "Editar receta" %} {% else %} {% trans "Crear nueva receta" %} {% endif %} 
 {% endblock head_title %} 
+
 {% block page_content %}
 
 <div class="container pb-15 md:pb-0">
@@ -18,9 +22,9 @@
   <div
     class="p-3 flex sticky top-0 z-10 justify-between items-center bg-white md:text-lg shadow-xl"
   >
-    <a class="text-gray-500 font-medium" href="{% url 'home' %}"> Cancelar </a>
+    <a class="text-gray-500 font-medium" href="{% url 'home' %}"> {% trans "Cancelar" %} </a>
     <h1 class="text-xl font-semibold font-text mr-3 md:text-2xl">
-      {% if object %}Editar receta {% else %} Nueva receta {% endif %}
+      {% if object %}{% trans "Editar receta" %} {% else %} {% trans "Nueva receta" %} {% endif %}
     </h1>
     <button
       class="cursor-pointer font-bold text-(--primary-color)"
@@ -60,10 +64,10 @@
     >
       {% include "icons/camera.html" %}
       <span class="font-primary font-bold mt-2 text-black"
-        >Añade una foto de tu receta</span
+        >{% trans "Añade una foto de tu receta" %}</span
       >
       <span class="text-gray-500 font-medium mt-2"
-        >Haz que tu plato luzca delicioso!</span
+        >{% trans "Haz que tu plato luzca delicioso!" %}</span
       >
     </label>
 
@@ -84,7 +88,7 @@
         type="button"
         onClick="openFileInput()"
       >
-        Cambiar foto
+        {% trans "Cambiar foto" %}
       </button>
       <button
         class="cursor-pointer bg-black/40 backdrop-blur-md border text-red-400 border-white/20 rounded-full p-2"
@@ -118,7 +122,7 @@
         class="text-(--secondary-color) flex items-center font-title font-semibold md:text-xl"
       >
         <span> {% include "icons/timer.html" %} </span>
-        Tiempo de preparación
+        {% trans "Tiempo de preparación" %}
       </h4>
 
       <div class="flex justify-between gap-3">
@@ -126,7 +130,7 @@
         <!-- Dropdown de Horas -->
         <div class="relative w-32">
           <label class="block text-sm font-medium ml-1 text-gray-500 mb-1 md:text-base">
-            Horas
+            {% trans "Horas" %}
           </label>
 
           <div
@@ -161,7 +165,7 @@
         <!-- Dropdown de Minutos -->
         <div class="relative w-32">
           <label class="block text-sm font-medium ml-1 text-gray-500 mb-1 md:text-base"
-            >Minutos
+            >{% trans "Minutos" %}
           </label>
 
           <div
@@ -203,7 +207,7 @@
         class="text-(--secondary-color) flex items-center font-title font-semibold gap-2 ml-2 md:text-xl"
       >
         <span> {% include "icons/difficulty.html" %} </span>
-        Dificultad
+        {% trans "Dificultad" %}
       </h4>
       <div
         id="difficulty-select"
@@ -242,7 +246,7 @@
 
     <!-- Etiquetas -->
     <h4 class="block font-bold m-4 mt-8 font-title text-black md:text-2xl"
-      >Etiquetas</h4
+      >{% trans "Etiquetas" %}</h4
     >
     <div class="flex overflow-scroll scrollbar-hide gap-2 mx-3 mb-3 xl:justify-between">
       {% for checkbox in form.food_category %}
@@ -268,7 +272,7 @@
 
     <!-- Ingredientes -->
     <div class="mt-8 w-full">
-      <h4 class="font-title ml-4 mb-8 text-xl font-bold md:text-2xl">Ingredientes</h4>
+      <h4 class="font-title ml-4 mb-8 text-xl font-bold md:text-2xl">{% trans "Ingredientes" %}</h4>
       {{ ingredients.management_form }}
 
       <div
@@ -382,7 +386,7 @@
         >
           <div class="flex items-center gap-2 text-(--primary-color) font-bold md:text-lg">
             <span class="material-symbols-outlined"> add_circle </span
-            ><span>Añadir ingrediente</span>
+            ><span>{% trans "Añadir ingrediente" %}</span>
           </div>
         </button>
       </div>
@@ -391,7 +395,7 @@
     <!-- Pasos -->
     {{ steps.management_form }}
     <div id="steps-container" class="mx-2 mt-8">
-      <h3 class="font-title ml-2 mb-4 text-xl font-bold md:text-2xl">Instrucciones</h3>
+      <h3 class="font-title ml-2 mb-4 text-xl font-bold md:text-2xl">{% trans "Instrucciones" %}</h3>
       {% for step in steps %}
       <div class="step-item p-2">
         {{ step.id }}
@@ -431,7 +435,7 @@
       >
         <div class="flex items-center gap-2 text-(--primary-color) font-bold md:text-lg">
           <span class="material-symbols-outlined"> add </span>
-          <span>Añadir paso</span>
+          <span>{% trans "Añadir paso" %}</span>
         </div>
       </button>
     </div>

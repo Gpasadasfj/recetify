@@ -1,7 +1,9 @@
 {% extends "general/layout.html" %}
-{% load static %}
 
-{% block head_title %}Recetify - Lista de recetas{% endblock head_title %}
+{% load static %}
+{% load i18n %}
+
+{% block head_title %}Recetify - {% trans "Lista de recetas" %}{% endblock head_title %}
 
 {% block page_content %}
 <div class="container p-4">
@@ -14,12 +16,12 @@
       <span class="absolute bottom-3 left-3 scale-125">{% include "icons/search.html" %}</span>
     </div>
 
-    <h2 class="font-bold text-2xl font-primary mt-4">Filtros de búsqueda</h2>
+    <h2 class="font-bold text-2xl font-primary mt-4">{% trans "Filtros de búsqueda" %}</h2>
 
     <!-- Tiempo -->
-    <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Tiempo</h3>
+    <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Tiempo" %}</h3>
     <div class="flex flex-col">
-      <label class="flex justify-between font-semibold" for="timeRange">Tiempo máximo <span id="timeValue" class="text-green-400">Todos</span></label>
+      <label class="flex justify-between font-semibold" for="timeRange">{% trans "Tiempo máximo" %} <span id="timeValue" class="text-green-400">{% trans "Todos" %}</span></label>
         <input 
           type="range" 
           id="timeRange" 
@@ -41,9 +43,10 @@
       </div>
     
       <!-- Dificultad-->
-      <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Dificultad</h3>
+      <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Dificultad" %}</h3>
       <div class="m-2 flex justify-between">
-        <!-- Todos -->
+
+      <!-- Todos -->
       <input type="radio" name="difficulty" value="" id="d0" class="hidden peer/d0" checked>
       <label for="d0"
         class="px-4 py-2 bg-white border-2 border-gray-300 cursor-pointer select-none rounded-full font-bold
@@ -51,7 +54,7 @@
                peer-checked/d0:text-(--primary-color)
                peer-checked/d0:border-(--primary-color)
                hover:bg-gray-100 transition">
-        Todos
+        {% trans "Todos" %}
       </label>
   
       <!-- Fácil -->
@@ -62,7 +65,7 @@
                peer-checked/d1:text-(--primary-color)
                peer-checked/d1:border-(--primary-color)
                hover:bg-gray-100 transition">
-        Fácil
+        {% trans "Fácil" %}
       </label>
   
       <!-- Medio -->
@@ -73,7 +76,7 @@
                peer-checked/d2:text-(--primary-color)
                peer-checked/d2:border-(--primary-color)
                hover:bg-gray-100 transition">
-        Medio
+        {% trans "Medio" %}
       </label>
   
       <!-- Difícil -->
@@ -84,7 +87,7 @@
                peer-checked/d3:text-(--primary-color)
                peer-checked/d3:border-(--primary-color)
                hover:bg-gray-100 transition">
-        Difícil
+        {% trans "Difícil" %}
       </label>
         
       </div>
@@ -92,7 +95,7 @@
   </div>
   
   <!-- Tipo de comida -->
-  <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">Tipo de comida</h3>
+  <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Tipo de comida" %}</h3>
       <div class="flex flex-wrap mt-4 gap-2 xl:justify-around">
 
     <!-- Desayuno -->
@@ -103,7 +106,7 @@
              peer-checked/f1:bg-(--primary-color)
              peer-checked/f1:text-white
              hover:bg-gray-100">
-      Desayuno
+      {% trans "Desayuno" %}
     </label>
 
         <!-- Cena -->
@@ -114,7 +117,7 @@
              peer-checked/f3:bg-(--primary-color)
              peer-checked/f3:text-white
              hover:bg-gray-100">
-      Cena
+      {% trans "Cena" %}
     </label>
 
     <!-- Postentreno -->
@@ -125,7 +128,7 @@
              peer-checked/f6:bg-(--primary-color)
              peer-checked/f6:text-white
              hover:bg-gray-100">
-      Postentreno
+      {% trans "Postentreno" %}
     </label>
 
     <!-- Almuerzo -->
@@ -136,7 +139,7 @@
              peer-checked/f2:bg-(--primary-color)
              peer-checked/f2:text-white
              hover:bg-gray-100">
-      Almuerzo
+      {% trans "Almuerzo" %}
     </label>
 
     <!-- Aperitivo -->
@@ -147,7 +150,7 @@
              peer-checked/f4:bg-(--primary-color)
              peer-checked/f4:text-white
              hover:bg-gray-100">
-      Aperitivo
+      {% trans "Aperitivo" %}
     </label>
 
     <!-- Preentreno -->
@@ -158,11 +161,11 @@
              peer-checked/f5:bg-(--primary-color)
              peer-checked/f5:text-white
              hover:bg-gray-100">
-      Preentreno
+      {% trans "Preentreno" %}
     </label>
   </div>
   
-      <button type="submit" class="cursor-pointer w-full text-white mt-6 font-bold py-2 bg-(--primary-color) rounded-full ">Aplicar filtros</button>
+      <button type="submit" class="cursor-pointer w-full text-white mt-6 font-bold py-2 bg-(--primary-color) rounded-full ">{% trans "Aplicar filtros" %}</button>
     </form>
 
     </div>

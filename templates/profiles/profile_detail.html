@@ -1,7 +1,10 @@
 {% extends "general/layout.html" %} 
+
 {% load static %} 
+{% load i18n %}
+
 {% block head_title %}
-Recetify - Lista de perfiles 
+{% trans "Recetify - Lista de perfiles" %}
 {% endblock head_title %} 
 {% block page_content %}
 
@@ -43,7 +46,7 @@ Recetify - Lista de perfiles
     <a
       href="{% url 'profiles:edit_profile' %}"
       class="w-full justify-center mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl xl:w-1/4"
-      >Editar perfil</a
+      >{% trans "Editar perfil" %}</a
     >
     {% endif %} 
     {% if request.user.is_authenticated %} 
@@ -52,11 +55,11 @@ Recetify - Lista de perfiles
       data-url="{% url 'profiles:toggle_follow' profile.pk %}"
       class="follow-btn cursor-pointer w-[95%] justify-center gap-1 mx-auto mb-4 flex py-2 bg-(--primary-color) text-white font-bold rounded-2xl "
     >
-      {% if following %}Siguiendo{% else %}Seguir{% endif %}
+      {% if following %}{% trans "Siguiendo" %}{% else %}{% trans "Seguir" %}{% endif %}
     </button>
     {% endif %} 
     {% else %}
-    <p>Inicia sesión para seguir a este usuario</p>
+    <p>{% trans "Inicia sesión para seguir a este usuario" %}</p>
     {% endif %}
   </div>
 
@@ -67,13 +70,13 @@ Recetify - Lista de perfiles
     <p class="flex flex-col text-green-700">
       <span id="followers-count" class="text-black text-xl"
         >{{ followers_number }}</span
-      >Seguidores
+      >{% trans "Seguidores" %}
     </p>
     <p class="flex flex-col border-x border-gray-300 text-green-700">
-      <span class="text-black text-xl">{{ recipes.count }}</span>Recetas
+      <span class="text-black text-xl">{{ recipes.count }}</span>{% trans "Recetas" %}
     </p>
     <p class="flex flex-col text-green-700">
-      <span class="text-black text-xl">{{ following_number }}</span>Siguiendo
+      <span class="text-black text-xl">{{ following_number }}</span>{% trans "Siguiendo" %}
     </p>
   </div>
 
@@ -85,7 +88,7 @@ Recetify - Lista de perfiles
       class="cursor-pointer active-slider flex items-center w-full py-4 text-(--primary-color) justify-center gap-1"
     >
       <span>{% include "icons/cutlerly.html" %}</span>
-      <p class="text-lg font-semibold">Recetas</p>
+      <p class="text-lg font-semibold">{% trans "Recetas" %}</p>
     </div>
 
     <div
@@ -93,7 +96,7 @@ Recetify - Lista de perfiles
       class="cursor-pointer flex items-center w-full py-4 justify-center gap-1"
     >
       <span>{% include "icons/filled_save.html" %}</span>
-      <p class="text-lg font-semibold">Guardados</p>
+      <p class="text-lg font-semibold">{% trans "Guardados" %}</p>
     </div>
 
     <div
@@ -113,7 +116,7 @@ Recetify - Lista de perfiles
   <p
     class="saved-recipes-default-message mt-10 text-gray-400 text-2xl font-title hidden justify-center items-center"
   >
-    Sin recetas todavía...
+    {% trans "Sin recetas todavía..." %}
   </p>
   {% endif %} 
   {% endif %}
@@ -129,7 +132,7 @@ Recetify - Lista de perfiles
   <p
     class="my-recipes-default-message mt-10 text-gray-400 text-2xl font-title flex justify-center items-center"
   >
-    Sin recetas todavía...
+    {% trans "Sin recetas todavía..." %}
   </p>
   {% endif %}
 </div>

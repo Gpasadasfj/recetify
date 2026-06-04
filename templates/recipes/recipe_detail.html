@@ -1,6 +1,9 @@
 {% extends "general/layout.html" %} 
+
 {% load static %} 
-{% block head_title %}Recetify - Detalle de receta{% endblock head_title %} 
+{% load i18n %}
+
+{% block head_title %}Recetify - {% trans "Detalle de receta" %}{% endblock head_title %} 
 {% block page_content %}
 
 <!-- Imagen -->
@@ -28,7 +31,7 @@
 
     <!-- Ingredientes -->
     <div class="bg-white m-2 p-4 border border-gray-200 rounded-2xl 2xl:w-1/2 2xl:m-0 2xl:ml-2">
-      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">Ingredientes</h3>
+      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">{% trans "Ingredientes" %}</h3>
       {% for ingredient in recipe.ingredient.all %}
       <div class="flex flex-col mb-6 w-full relative justify-center border-b border-gray-300 pb-2">
         <div class="check-toggle cursor-pointer">
@@ -58,7 +61,7 @@
   
     <!-- Etiquetas -->
     <div class="flex gap-2 mt-8 ml-2 bg-white m-2 py-4 pl-4 2xl:pr-4 border border-gray-200 rounded-2xl flex-col 2xl:w-1/2 2xl:mt-0">
-      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">Etiquetas</h3>
+      <h3 class="text-2xl font-title font-bold mb-8 md:text-3xl">{% trans "Etiquetas" %}</h3>
       <div class="flex scrollbar-hide mr-2 overflow-x-scroll gap-2 2xl:flex 2xl:flex-col">
         {% for category in recipe.food_category.all %}
         <p
@@ -73,7 +76,7 @@
   </div>
 
   <!-- Pasos -->
-  <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">Instrucciones</h3>
+  <h3 class="font-title ml-2 mb-4 mt-8 text-xl font-bold md:text-2xl">{% trans "Instrucciones" %}</h3>
   {% for step in recipe.steps.all %}
   <div class="m-2 flex gap-4 items-baseline">
     <span
@@ -97,7 +100,7 @@
     />
 
     <div>
-      <p class="text-gray-400 font-semibold md:text-lg">Receta de:</p>
+      <p class="text-gray-400 font-semibold md:text-lg">{% trans "Receta de:" %}</p>
       <p class="font-bold md:text-lg">{{ recipe.user.profile.full_name_title }}</p>
     </div>
 
@@ -108,9 +111,9 @@
       class="cursor-pointer follow-btn py-2 px-4 border rounded-full border-gray-300 font-bold bg-(--bg-color) ml-auto"
     >
       {% if following %}
-      Siguiendo
+      {% trans "Siguiendo" %}
       {% else %}
-      Seguir
+      {% trans "Seguir" %}
       {% endif %}
     </button>
     {% endif %}
@@ -124,7 +127,7 @@
       <p class="text-(--primary-color) scale-125">
         {% include "icons/timer.html" %}
       </p>
-      <p class="text-gray-400 font-semibold">Tiempo</p>
+      <p class="text-gray-400 font-semibold">{% trans "Tiempo" %}</p>
       <p class="font-bold">{{ recipe.time_data.display }}</p>
     </div>
     <div
@@ -133,14 +136,14 @@
       <p class="text-(--primary-color) h-7 relative top-1">
         {% include "icons/cutlerly.html" %}
       </p>
-      <p class="relative top-0.5 text-gray-400 font-semibold">Dificultad</p>
+      <p class="relative top-0.5 text-gray-400 font-semibold">{% trans "Dificultad" %}</p>
       <p class="relative top-0.5 font-bold">{{ recipe.difficulty }}</p>
     </div>
   </div>
 
   <!-- Valoraciones, guardar receta y editar -->
   <div class="border-t m-2 border-gray-200">
-    <h3 class="text-gray-400 font-semibold mt-8 md:text-2xl">Valoraciones</h3>
+    <h3 class="text-gray-400 font-semibold mt-8 md:text-2xl">{% trans "Valoraciones" %}</h3>
 
     <div class="flex items-center justify-between gap-3">
       <div class="text-3xl font-semibold">
@@ -212,7 +215,7 @@
         type="submit"
         class="mt-4 cursor-pointer bg-(--primary-color) text-white font-bold p-2 w-full rounded-2xl mb-2 md:text-lg"
       >
-        Guardar valoración
+        {% trans "Guardar valoración" %}
       </button>
     </form>
 
@@ -226,7 +229,7 @@
     <a
       href="{% url 'recipes:update_recipe' recipe.pk %}"
       class="w-full flex justify-center mt-4 mb-8 mx-4 bg-(--btn-bg) border-2 border-(--primary-color)/50 border-dashed rounded-lg px-4 py-2 text-sm md:text-lg"
-      >Editar receta</a
+      >{% trans "Editar receta" %}</a
     >
   </div>
   {% endif %}

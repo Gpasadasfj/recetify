@@ -1,5 +1,7 @@
 {% extends "general/layout.html" %} 
-{% block head_title %}Recetify- Inicio de Sesión{% endblock head_title %} 
+{% load i18n %}
+
+{% block head_title %}{% trans "Recetify- Inicio de Sesión" %}{% endblock head_title %} 
 {% block page_content %}
 <div class="bg-gradient min-h-screen">
   <div class="container px-4 py-4">
@@ -8,9 +10,9 @@
         >{% include "icons/apple.html" %}</span
       >
       <div class="text-center">
-        <h1 class="text-3xl font-bold">Bienvenido de nuevo!</h1>
+        <h1 class="text-3xl font-bold">{% trans "Bienvenido de nuevo!" %}</h1>
         <p class="text-gray-500">
-          Inicia sesión para descubrir recetas increíbles.
+          {% trans "Inicia sesión para descubrir recetas increíbles." %}
         </p>
       </div>
       <form method="post">
@@ -34,16 +36,16 @@
         <button
           class="px-4 py-2 mt-6 w-full bg-(--primary-color) text-black font-semibold rounded"
         >
-          Enviar
+          {% trans "Enviar" %}
         </button>
       </form>
 
       <div class="mt-4 flex gap-2">
-        <p>No tienes una cuenta?</p>
+        <p>{% trans "No tienes una cuenta?" %}</p>
         <a
           href="{% url 'register' %}"
           class="text-(--primary-color) font-semibold"
-          >Regístrate</a
+          >{% trans "Regístrate" %}</a
         >
       </div>
     </div>

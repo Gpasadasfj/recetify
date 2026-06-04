@@ -1,5 +1,10 @@
-{% extends "general/layout.html" %} {% load static %} {% block head_title %}
-Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
+{% extends "general/layout.html" %} 
+
+{% load static %} 
+{% load i18n %}
+
+{% block head_title %} {% trans "Recetify - Editar perfil" %} {% endblock head_title %} 
+{% block page_content %}
 
 <div class="container">
   <div
@@ -9,7 +14,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
       {% csrf_token %}
       <div>
         <h2 class="text-2xl text-center mt-4 font-bold font-primary">
-          Editar perfil
+          {% trans "Editar perfil" %}
         </h2>
 
         <!-- Imagen de perfil -->
@@ -38,7 +43,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
             for="id_profile_picture"
             class="inline-flex gap-2 rounded-lg bg-(--primary-color) px-4 py-2 mt-4 text-sm font-bold text-white cursor-pointer"
           >
-            Cambiar imagen
+            {% trans "Cambiar imagen" %}
           </label>
         </div>
 
@@ -52,7 +57,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Nombre -->
       <div class="mt-4">
-        <p class="font-semibold">Nombre</p>
+        <p class="font-semibold">{% trans "Nombre" %}</p>
         <div class="relative">
           <span> {{ user_form.first_name }} </span>
           <p class="absolute left-3 top-4 text-gray-400">
@@ -66,7 +71,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Apellido -->
       <div class="mt-4">
-        <p class="font-semibold">Apellidos</p>
+        <p class="font-semibold">{% trans "Apellidos" %}</p>
         <div class="relative">
           <span> {{ user_form.last_name }} </span>
           <p class="absolute left-3 top-4 text-gray-400">
@@ -82,7 +87,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Nombre de usuario -->
       <div class="mt-4">
-        <p class="font-semibold">Nombre de usuario</p>
+        <p class="font-semibold">{% trans "Nombre de usuario" %}</p>
         <div class="relative">
           <span> {{ user_form.username }} </span>
           <p class="absolute left-3 top-4 text-gray-400">
@@ -96,7 +101,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Email -->
       <div class="mt-4">
-        <p class="font-semibold">Correo electrónico</p>
+        <p class="font-semibold">{% trans "Correo electrónico" %}</p>
         <div class="relative">
           <span> {{ user_form.email }} </span>
           <p class="absolute left-3 top-4 text-gray-400">
@@ -110,7 +115,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Biografía -->
       <div class="mt-4">
-        <p class="font-semibold">Biografía</p>
+        <p class="font-semibold">{% trans "Biografía" %}</p>
         {{ form.bio }} {% if form.bio.errors %}
         <div class="text-red-500 ml-2">* {{ form.bio.errors.0 }}</div>
         {% endif %}
@@ -118,7 +123,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
 
       <!-- Fecha de nacimiento -->
       <div class="mt-4">
-        <p class="font-semibold">Fecha de nacimiento</p>
+        <p class="font-semibold">{% trans "Fecha de nacimiento" %}</p>
         {{ form.birth_date }} {% if form.birth_date.errors %}
         <div class="text-red-500 ml-2">* {{ form.birth_date.errors.0 }}</div>
         {% endif %}
@@ -129,7 +134,7 @@ Recetify - Crear perfil {% endblock head_title %} {% block page_content %}
           type="submit"
           class="cursor-pointer bg-(--primary-color) w-full px-2 py-4 text-white font-bold rounded-full mt-6"
         >
-          Guardar cambios
+          {% trans "Guardar cambios" %}
         </button>
       </div>
     </form>

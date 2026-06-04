@@ -1,4 +1,6 @@
 {% load static %}
+{% load i18n %}
+
 <section class="relative h-70 overflow-hidden md:h-80 xl:h-100">
   <!-- Vídeo -->
   <video
@@ -19,11 +21,13 @@
     class="relative z-10 h-full flex flex-col items-center justify-center text-white"
   >
     <h1 class="m-4 text-3xl font-title italic md:text-4xl">
-      Bienvenido a Recetify!
+      {% trans "Bienvenido a Recetify!" %}
     </h1>
     <p class="font-primary font-bold m-4 text-center md:text-xl">
-      La <span class="text-[#0ee15f]">red social</span> de los amantes de la
-      cocina
+      {% blocktrans %}
+        La <span class="text-[#0ee15f]">red social</span> de los amantes de la
+        cocina
+      {% endblocktrans %}
     </p>
   </div>
 </section>
