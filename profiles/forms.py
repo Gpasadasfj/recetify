@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 from .models import UserProfile
 
@@ -13,8 +14,8 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ["username", "email", "first_name", "last_name"]
         widgets = {
-            "first_name" : forms.TextInput(attrs={
-                "class" : BASE_CLASS 
+            "first_name": forms.TextInput(attrs={
+                "class": BASE_CLASS
             }),
             "last_name": forms.TextInput(attrs={
                 "class": BASE_CLASS
@@ -25,17 +26,17 @@ class UserForm(forms.ModelForm):
             "email": forms.EmailInput(attrs={
                 "class": BASE_CLASS
             }),
-            }
+        }
 
 
 class UserProfileForm(forms.ModelForm):
     profile_picture = forms.ImageField(
         required=False,
         error_messages={
-            "invalid": "La imagen seleccionada no es válida.",
-            "invalid_image": "El archivo subido no es una imagen válida o está dañado.",
-            }
-        )
+            "invalid": _("La imagen seleccionada no es válida."),
+            "invalid_image": _("El archivo subido no es una imagen válida o está dañado."),
+        }
+    )
         
     class Meta:
         model = UserProfile
@@ -44,9 +45,8 @@ class UserProfileForm(forms.ModelForm):
             "birth_date": forms.DateInput(attrs={
                 "type": "date",
                 "class": BASE_CLASS_USER_PROFILE
-                }),
+            }),
             "bio": forms.Textarea(attrs={
                 "class": BASE_CLASS_USER_PROFILE
             }),
-            }
-
+        }

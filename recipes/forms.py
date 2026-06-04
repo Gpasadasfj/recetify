@@ -1,17 +1,17 @@
 from datetime import timedelta
-from decimal import Decimal
 from django import forms
 from django.forms import inlineformset_factory
+from django.utils.translation import gettext_lazy as _
 from .models import Ingredient, Rating, Recipe, Steps
 
 class RecipeForm(forms.ModelForm):
 
     hours = forms.IntegerField(required=False, min_value=0, error_messages={
-        "invalid": "Introduce un número válido para las horas.",
+        "invalid": _("Introduce un número válido para las horas."),
     })
     minutes = forms.IntegerField(required=True, min_value=0, error_messages={
-        "required": "Indica los minutos de preparación.",
-        "invalid": "Introduce un número válido para los minutos."
+        "required": _("Indica los minutos de preparación."),
+        "invalid": _("Introduce un número válido para los minutos.")
     })
     difficulty = forms.TextInput()
                                    
@@ -27,26 +27,26 @@ class RecipeForm(forms.ModelForm):
         exclude = ["user", "created_at", "rating", "time"]
         error_messages = {
             "title": {
-                "required": "El título de la receta es obligatorio.",
-                "max_length": "El título no puede superar los 100 caracteres."
+                "required": _("El título de la receta es obligatorio."),
+                "max_length": _("El título no puede superar los 100 caracteres.")
             },
             "image": {
-                "required": "Debes subir una imagen para la receta.",
-                "invalid": "El archivo subido no es una imagen válida.",
+                "required": _("Debes subir una imagen para la receta."),
+                "invalid": _("El archivo subido no es una imagen válida."),
             },
             "food_category": {
-                "required": "Selecciona al menos una categoría.",
+                "required": _("Selecciona al menos una categoría."),
             }
         }
         widgets = {
             "title": forms.TextInput(attrs={
                 "class": "border-none w-full pt-4 border-none pl-4 pr-4 font-title font-bold text-2xl placeholder:text-gray-400 md:text-3xl focus:outline-none focus:ring-0",
-                "placeholder": "Nombre de la Receta"
+                "placeholder": _("Nombre de la Receta")
             }),
             "description": forms.Textarea(attrs={
                 "class": "border-none w-full pl-4 pr-4 pb-4 pt-0 font-primary text-s focus:outline-none focus:ring-0 placeholder:text-gray-400 focus:ring-0 md:text-lg",
                 "rows": 2,
-                "placeholder": "Añade una breve descripción..."
+                "placeholder": _("Añade una breve descripción...")
             }),
             "food_category": forms.CheckboxSelectMultiple(attrs={"class": "hidden peer"})
         }
@@ -56,13 +56,13 @@ class RecipeForm(forms.ModelForm):
         if image:
             max_size = 2 * 1024 * 1024  # 2MB
             if image.size > max_size:
-                raise forms.ValidationError("La imagen no puede superar los 2MB.")
+                raise forms.ValidationError(_("La imagen no puede superar los 2MB."))
         return image
 
     def clean_title(self):
         title = self.cleaned_data.get("title")
         if title and len(title) < 3:
-            raise forms.ValidationError("El título debe tener al menos 3 caracteres.")
+            raise forms.ValidationError(_("El título debe tener al menos 3 caracteres."))
         return title
 
 
@@ -81,13 +81,13 @@ class StepForm(forms.ModelForm):
         fields = ["description"]
         error_messages = {
             "description": {
-                "required": "Cada paso debe tener una descripción."
+                "required": _("Cada paso debe tener una descripción.")
             }
         }
         widgets = {
             "description": forms.Textarea(attrs={
                 "rows": 3,
-                "placeholder": "Describe el paso...",
+                "placeholder": _("Describe el paso..."),
                 "class": "rounded-2xl p-2 w-full border border-gray-300 shadow-md focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none"
             })
         }
@@ -99,25 +99,25 @@ class IngredientForm(forms.ModelForm):
         fields = ["quantity", "unit", "name"]
         error_messages = {
             "quantity": {
-                "required": "Introduce la cantidad del ingrediente.",
-                "invalid": "Introduce un número válido."
+                "required": _("Introduce la cantidad del ingrediente."),
+                "invalid": _("Introduce un número válido.")
             },
             "name": {
-                "required": "El ingrediente debe tener un nombre."
+                "required": _("El ingrediente debe tener un nombre.")
             },
             "unit": {
-                "required": "Selecciona la unidad del ingrediente."
+                "required": _("Selecciona la unidad del ingrediente.")
             }
         }
         widgets = {
             "quantity": forms.NumberInput(attrs={
                 "step": "0.5",
-                "placeholder": "10",
+                "placeholder": _("10"),
                 "class": "w-15 rounded-xl text-center border border-gray-300 font-bold text-gray-500 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:w-20"
             }),
             "unit": forms.Select(attrs={"class": "hidden"}),
             "name": forms.TextInput(attrs={
-                "placeholder": "  Nombre del ingrediente",
+                "placeholder": _("  Nombre del ingrediente"),
                 "class": "rounded-xl w-full px-2 border border-gray-300 focus:border-(--primary-color) focus:ring focus:ring-(--primary-color) focus:outline-none placeholder:text-gray-400 md:max-w-[60dvw] md:w-[60dvw]"
             })
         }
