@@ -10,15 +10,15 @@
 
 <div class="container">
   <!-- Foto de usuario -->
-  {% if profile.profile_picture %}
+
   <div class="flex justify-center my-10">
     <img
-      src="{{ profile.profile_picture.url }}"
+      src="{{ profile.profile_image_url }}"
       alt="{{ profile.user }}"
       class="rounded-full h-32 w-32 object-cover outline-4 outline-(--primary-color)/50 border-4 border-white"
     />
   </div>
-  {% endif %}
+
 
   <!-- Datos de usuario -->
   <p class="primary-font font-bold text-2xl text-center">
