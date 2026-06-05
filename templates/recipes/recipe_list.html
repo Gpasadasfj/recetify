@@ -12,14 +12,14 @@
     <!-- FILTROS -->
     <!-- Nombre -->
     <div class="relative mt-4">
-      <input type="text" placeholder='{% trans "Buscador por nombre" %}' name="search" class="rounded-2xl bg-white h-10 pl-9 w-full border-gray-400 focus:ring focus:ring-green-400 focus:border-green-400">
-      <span class="absolute bottom-3 left-3 scale-125">{% include "icons/search.html" %}</span>
+      <input type="text" placeholder='{% trans "Buscador por nombre" %}' name="search" class="w-full h-10 bg-white border-gray-400 rounded-2xl pl-9 focus:ring focus:ring-green-400 focus:border-green-400">
+      <span class="absolute scale-125 bottom-3 left-3">{% include "icons/search.html" %}</span>
     </div>
 
-    <h2 class="font-bold text-2xl font-primary mt-4">{% trans "Filtros de búsqueda" %}</h2>
+    <h2 class="mt-4 text-2xl font-bold font-primary">{% trans "Filtros de búsqueda" %}</h2>
 
     <!-- Tiempo -->
-    <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Tiempo" %}</h3>
+    <h3 class="pb-2 mt-4 mb-2 text-xl font-bold border-b-2 border-gray-300">{% trans "Tiempo" %}</h3>
     <div class="flex flex-col">
       <label class="flex justify-between font-semibold" for="timeRange">{% trans "Tiempo máximo" %} <span id="timeValue" class="text-green-400">{% trans "Todos" %}</span></label>
         <input 
@@ -33,7 +33,7 @@
           class="accent-green-400"
           >
 
-      <div class="flex justify-between text-xs mt-2 px-1 font-bold">
+      <div class="flex justify-between px-1 mt-2 text-xs font-bold">
         <span>-</span>
         <span>5</span>
         <span>15</span>
@@ -43,8 +43,8 @@
       </div>
     
       <!-- Dificultad-->
-      <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Dificultad" %}</h3>
-      <div class="m-2 flex justify-between">
+      <h3 class="pb-2 mt-4 mb-2 text-xl font-bold border-b-2 border-gray-300">{% trans "Dificultad" %}</h3>
+      <div class="flex justify-between m-2">
 
       <!-- Todos -->
       <input type="radio" name="difficulty" value="" id="d0" class="hidden peer/d0" checked>
@@ -95,8 +95,8 @@
   </div>
   
   <!-- Tipo de comida -->
-  <h3 class="font-bold text-xl mt-4 mb-2 pb-2 border-b-2 border-gray-300">{% trans "Tipo de comida" %}</h3>
-      <div class="flex flex-wrap mt-4 gap-2 xl:justify-around">
+  <h3 class="pb-2 mt-4 mb-2 text-xl font-bold border-b-2 border-gray-300">{% trans "Tipo de comida" %}</h3>
+      <div class="flex flex-wrap gap-2 mt-4 xl:justify-around">
 
     <!-- Desayuno -->
     <input type="checkbox" name="food_type" value="breakfast" id="f1" class="hidden peer/f1">
@@ -172,7 +172,7 @@
   
     <ul>
       {% if recipes %}
-        <div id="recipes" class="grid grid-cols-2 mt-4 mx-2 gap-1 xl:grid-cols-3 md:gap-2">
+        <div id="recipes" class="grid grid-cols-2 gap-1 mx-2 mt-4 xl:grid-cols-3 md:gap-2">
           {% for recipe in recipes %}
             {% include "_includes/_recipe_card.html" with recipe=recipe only %}
           {% endfor %}

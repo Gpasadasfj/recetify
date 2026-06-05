@@ -1,10 +1,11 @@
 {% load static %}
 {% load i18n %}
+
 <header
-  class="bg-white shadow-lg text-white py-4 flex items-center justify-between"
+  class="flex items-center justify-between py-4 text-white bg-white shadow-lg"
 >
   <!-- Logo -->
-  <a href="{% url 'home' %}" class="flex pl-4 items-center">
+  <a href="{% url 'home' %}" class="flex items-center pl-4">
     <img
       class="w-24 font-extrabold md:w-32"
       src="{% static 'img/recetify-logo.svg' %}"
@@ -12,48 +13,56 @@
     />
   </a>
 
-  <form class="text-black" method="post" action="{% url 'set_language' %}">
-    {% csrf_token %}
-
-    {% get_current_language as LANGUAGE_CODE %}
-    {% get_available_languages as LANGUAGES %}
-
-    <select name="language">
-        {% for lang_code, lang_name in LANGUAGES %}
-        <option value="{{ lang_code }}" {% if LANGUAGE_CODE == lang_code %}selected{% endif %}>
-            {{ lang_name }} ({{ lang_code }})
-        </option>
-        {% endfor %}
-    </select>
-
-    <input type="hidden" name="next" value="{{ request.path }}"/>
-
-    <input type="submit" value='{% trans "Cambiar" %}'>
-  </form>
-
-  {% if not request.user.is_authenticated %}
-  <div class="text-sm pr-4 font-bold gap-2 flex items-center text-black">
-    <a
-      href="{% url 'login' %}"
-      class="cursor-pointer hover:underline md:text-base"
-      >{% trans "Inicia sesión" %}</a
-    >
-    <a
-      href="{% url 'register' %}"
-      class="cursor-pointer bg-(--primary-color) py-2 px-4 rounded-full md:text-base"
-      >{% trans "Regístrate" %}</a
-    >
-    {% else %}
-    <form action="{% url 'logout' %}" method="post">
+  <div class="flex gap-2">
+    <!-- Idioma -->
+  <form class="flex items-center gap-3 text-black" method="post" action="{% url 'set_language' %}">
       {% csrf_token %}
-      <button
-        type="submit"
-        class="cursor-pointer hover:underline text-sm font-bold text-black md:text-base px-4 py-2"
+  
+      {% get_current_language as LANGUAGE_CODE %}
+  
+      <select
+          name="language"
+          onchange="this.form.submit()"
+          class="p-1 text-sm font-bold bg-white border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
       >
-        {% trans "Cerrar sesión" %}
-      </button>
-    </form>
-    
-    {% endif %}
+      
+          <option value="es" {% if LANGUAGE_CODE == "es" %}selected{% endif %}>
+             Español
+             
+          </option>
+  
+          <option value="en" {% if LANGUAGE_CODE == "en" %}selected{% endif %}>
+             English
+          </option>
+      </select>
+  
+      <input type="hidden" name="next" value="{{ request.path }}"/>
+  </form>
+  
+    {% if not request.user.is_authenticated %}
+    <div class="flex items-center gap-2 pr-4 text-sm font-bold text-black">
+      <a
+        href="{% url 'login' %}"
+        class="cursor-pointer hover:underline md:text-base"
+        >{% trans "Inicia sesión" %}</a
+      >
+      <a
+        href="{% url 'register' %}"
+        class="cursor-pointer bg-(--primary-color) py-2 px-4 rounded-full md:text-base"
+        >{% trans "Regístrate" %}</a
+      >
+      {% else %}
+      <form action="{% url 'logout' %}" method="post">
+        {% csrf_token %}
+        <button
+          type="submit"
+          class="px-4 py-2 text-sm font-bold text-black cursor-pointer hover:underline md:text-base"
+        >
+          {% trans "Cerrar sesión" %}
+        </button>
+      </form>
+      
+      {% endif %}
+    </div>
   </div>
 </header>
